@@ -164,6 +164,17 @@
         <code>/products/</code> alone works. The first check records what's already listed;
         you're pinged only when something new appears after that.</div>
     </div>
+    <details>
+      <summary class="hint">Advanced: custom item pattern (for JS-heavy sites)</summary>
+      <div class="field" style="margin-top:8px">
+        <label>Item regex (each match = one tracked item; overrides keywords)</label>
+        <input type="text" id="p-pattern" placeholder="N[0-9]{13}">
+      </div>
+      <div class="field">
+        <label>Item URL template ({0} = the match)</label>
+        <input type="text" id="p-tmpl" placeholder="https://p-bandai.com/us/item/{0}">
+      </div>
+    </details>
   </div>
   <div class="row" style="justify-content:flex-end">
     <button onclick="document.getElementById('product-dialog').close()">Cancel</button>
@@ -334,6 +345,8 @@ function openProductDialog(index = null) {
   $("p-out").value = p ? (p.out_of_stock_text || []).join(", ") : "sold out, out of stock";
   $("p-in").value = p ? (p.in_stock_text || []).join(", ") : "add to cart";
   $("p-kw").value = p ? (p.keywords || []).join(", ") : "/products/";
+  $("p-pattern").value = p ? (p.item_pattern || "") : "";
+  $("p-tmpl").value = p ? (p.item_url_template || "") : "";
   typeChanged();
   $("product-dialog").showModal();
 }
@@ -343,10 +356,13 @@ async function saveProduct() {
   if (!name || !url) return toast("Name and URL are required");
   if (!/^https?:\/\//.test(url)) return toast("URL must start with http(s)://");
   const isNew = $("p-type").value === "new_items";
-  if (isNew && !parsePhrases($("p-kw").value).length)
-    return toast("At least one link keyword is required");
+  const pattern = $("p-pattern").value.trim();
+  if (isNew && !pattern && !parsePhrases($("p-kw").value).length)
+    return toast("At least one link keyword (or an item regex) is required");
   const product = isNew
-    ? {name, type: "new_items", url, keywords: parsePhrases($("p-kw").value)}
+    ? {name, type: "new_items", url, keywords: parsePhrases($("p-kw").value),
+       ...(pattern ? {item_pattern: pattern,
+                      item_url_template: $("p-tmpl").value.trim() || "{0}"} : {})}
     : {name, url,
        out_of_stock_text: parsePhrases($("p-out").value),
        in_stock_text: parsePhrases($("p-in").value)};

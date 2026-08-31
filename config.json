@@ -1,8 +1,8 @@
 {
-  "check_interval_minutes": 10,
+  "check_interval_minutes": 5,
   "renotify_minutes": 120,
   "notifications": {
-    "ntfy_topic": "",
+    "ntfy_topic": "zorojuro-x8k2p",
     "discord_webhook": "",
     "desktop": false
   },
@@ -34,6 +34,22 @@
         "/products/"
       ],
       "id": "f9fd9208"
+    },
+    {
+      "name": "Premium Bandai US - featured One Piece items",
+      "type": "new_items",
+      "url": "https://p-bandai.com/us/brand/onepiececardgame",
+      "item_pattern": "N[0-9]{13}",
+      "item_url_template": "https://p-bandai.com/us/item/{0}",
+      "id": "pbandaius"
+    },
+    {
+      "name": "Premium Bandai Singapore - featured One Piece items",
+      "type": "new_items",
+      "url": "https://p-bandai.com/sg/brand/onepiececardgame",
+      "item_pattern": "N[0-9]{13}",
+      "item_url_template": "https://p-bandai.com/sg/item/{0}",
+      "id": "pbandaisg"
     }
   ],
   "paused": false

@@ -77,6 +77,19 @@ def check_new_items(product):
     """
     resp = requests.get(product["url"], headers=DEFAULT_HEADERS, timeout=30)
     resp.raise_for_status()
+
+    # Advanced mode: a regex over the raw page (for SPA sites that embed
+    # product data as JSON rather than links). Each match is one tracked item.
+    pattern = product.get("item_pattern")
+    if pattern:
+        template = product.get("item_url_template", "{0}")
+        items = {}
+        for m in re.findall(pattern, resp.text):
+            if isinstance(m, tuple):
+                m = m[0]
+            items[template.format(m)] = m
+        return items
+
     keywords = [k.lower() for k in product.get("keywords", []) if k.strip()]
     items = {}
     for href, inner in LINK_RE.findall(resp.text):
