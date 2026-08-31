@@ -73,7 +73,12 @@ SECRET_RE = re.compile(r"\{([A-Z][A-Z0-9_]*)\}")
 def resolve_url(url):
     """Replace {SECRET_NAME} placeholders with env vars (used for API keys,
     which must stay out of the public config)."""
-    return SECRET_RE.sub(lambda m: os.environ.get(m.group(1), m.group(0)), url)
+    return SECRET_RE.sub(lambda m: os.environ.get(m.group(1)) or m.group(0), url)
+
+
+def sanitize_error(exc, product):
+    """Keep resolved secrets (API keys) out of logs and notifications."""
+    return str(exc).replace(resolve_url(product["url"]), product["url"])
 
 
 def check_new_items(product):
@@ -170,7 +175,7 @@ def run_new_items_check(config, state, product, prev):
     try:
         items = check_new_items(product)
     except requests.RequestException as e:
-        log(f"{name}: fetch failed ({e})")
+        log(f"{name}: fetch failed ({sanitize_error(e, product)})")
         return
     now = time.time()
 
@@ -228,7 +233,7 @@ def run_checks(config, state):
         try:
             status = check_product(product)
         except requests.RequestException as e:
-            log(f"{name}: fetch failed ({e})")
+            log(f"{name}: fetch failed ({sanitize_error(e, product)})")
             continue
 
         log(f"{name}: {status}")

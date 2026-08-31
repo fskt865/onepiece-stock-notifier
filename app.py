@@ -87,7 +87,7 @@ def run_check(product, config):
         status = core.check_product(product)
         error = None
     except requests.RequestException as exc:
-        status, error = "error", str(exc)
+        status, error = "error", core.sanitize_error(exc, product)
 
     with lock:
         state = load_state()
