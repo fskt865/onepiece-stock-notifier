@@ -1,0 +1,23 @@
+{
+  "check_interval_minutes": 10,
+  "renotify_minutes": 120,
+  "notifications": {
+    "ntfy_topic": "onepiece-restock-CHANGE-ME-a8f3k2",
+    "discord_webhook": "",
+    "desktop": false
+  },
+  "products": [
+    {
+      "name": "One Piece TCG - OP-09 Booster Box (example)",
+      "url": "https://www.bestbuy.com/site/some-one-piece-product/1234567.p",
+      "in_stock_text": ["add to cart"],
+      "out_of_stock_text": ["sold out", "coming soon", "unavailable nearby"]
+    },
+    {
+      "name": "One Piece TCG - Starter Deck (example)",
+      "url": "https://en.onepiece-cardgame.com/products/example",
+      "in_stock_text": ["in stock", "add to cart"],
+      "out_of_stock_text": ["out of stock", "sold out"]
+    }
+  ]
+}

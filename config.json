@@ -1,0 +1,10 @@
+{
+  "check_interval_minutes": 10,
+  "renotify_minutes": 120,
+  "notifications": {
+    "ntfy_topic": "",
+    "discord_webhook": "",
+    "desktop": false
+  },
+  "products": []
+}

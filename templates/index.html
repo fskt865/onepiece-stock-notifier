@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Notifier</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1c2230; --muted: #6b7280;
+    --line: #e3e6ec; --accent: #2563eb; --accent-text: #ffffff;
+    --green: #157f3d; --green-bg: #e5f6ec; --red: #b3261e; --red-bg: #fbeae9;
+    --amber: #92600a; --amber-bg: #fdf3dd; --gray: #5b6472; --gray-bg: #eceef2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171d; --card: #1d2129; --text: #e8eaf0; --muted: #99a1af;
+      --line: #2c313b; --accent: #5b8bf5; --accent-text: #0e1116;
+      --green: #5ad189; --green-bg: #16301f; --red: #f0857d; --red-bg: #35201e;
+      --amber: #e5b567; --amber-bg: #322817; --gray: #aab2bf; --gray-bg: #262b34;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 60px; }
+  header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  h1 { font-size: 22px; margin: 0; }
+  #next-check { color: var(--muted); font-size: 13px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px; margin-bottom: 16px;
+  }
+  .card h2 { font-size: 15px; margin: 0 0 12px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 3px; }
+  input[type=text], input[type=url], input[type=number] {
+    width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--bg); color: var(--text); font: inherit;
+  }
+  .field { flex: 1 1 180px; }
+  .field.small { flex: 0 1 140px; }
+  button {
+    padding: 7px 14px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--card); color: var(--text); font: inherit; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  button.danger:hover { border-color: var(--red); color: var(--red); }
+  .pill {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+  }
+  .pill.in_stock { background: var(--green-bg); color: var(--green); }
+  .pill.out_of_stock { background: var(--gray-bg); color: var(--gray); }
+  .pill.unknown { background: var(--amber-bg); color: var(--amber); }
+  .pill.error { background: var(--red-bg); color: var(--red); }
+  .pill.not_checked { background: var(--gray-bg); color: var(--muted); }
+  .product { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--line); }
+  .product:first-of-type { border-top: none; }
+  .product .info { flex: 1; min-width: 0; }
+  .product .name { font-weight: 600; }
+  .product a { color: var(--accent); font-size: 13px; word-break: break-all; text-decoration: none; }
+  .product a:hover { text-decoration: underline; }
+  .product .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .product .actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .product .actions button { padding: 4px 10px; font-size: 13px; }
+  .empty { color: var(--muted); padding: 12px 0; }
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--text); color: var(--bg); padding: 9px 18px; border-radius: 8px;
+    font-size: 14px; opacity: 0; transition: opacity .25s; pointer-events: none; max-width: 90vw;
+  }
+  .toast.show { opacity: 1; }
+  dialog {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--card);
+    color: var(--text); padding: 20px; width: min(560px, 92vw);
+  }
+  dialog::backdrop { background: rgba(0,0,0,.45); }
+  dialog h2 { margin-top: 0; }
+  dialog .field { margin-bottom: 12px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🃏 Stock Notifier</h1>
+    <span id="next-check"></span>
+  </header>
+
+  <div class="card">
+    <div class="row" style="justify-content: space-between;">
+      <h2 style="margin:0">Watch targets</h2>
+      <div class="row">
+        <button onclick="checkAll()">Check all now</button>
+        <button class="primary" onclick="openProductDialog()">+ Add target</button>
+      </div>
+    </div>
+    <div id="products"></div>
+  </div>
+
+  <div class="card">
+    <h2>Notifications</h2>
+    <div class="row">
+      <div class="field">
+        <label>ntfy topic (phone push — install the ntfy app and subscribe to this topic)</label>
+        <input type="text" id="ntfy" placeholder="e.g. onepiece-restock-x7k2p9">
+      </div>
+      <div class="field">
+        <label>Discord webhook URL</label>
+        <input type="text" id="discord" placeholder="https://discord.com/api/webhooks/…">
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <div class="checkbox-row"><input type="checkbox" id="desktop"><label for="desktop" style="margin:0">Desktop popup (on the machine running the server)</label></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="primary" onclick="saveSettings()">Save</button>
+      <button onclick="testNotification()">Send test notification</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Schedule</h2>
+    <div class="row">
+      <div class="field small">
+        <label>Check every (minutes)</label>
+        <input type="number" id="interval" min="1">
+      </div>
+      <div class="field small">
+        <label>Re-ping after (minutes, 0 = once)</label>
+        <input type="number" id="renotify" min="0">
+      </div>
+      <div class="checkbox-row" style="align-self:flex-end; padding-bottom:8px">
+        <input type="checkbox" id="paused"><label for="paused" style="margin:0">Pause watching</label>
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="primary" onclick="saveSettings()">Save</button>
+    </div>
+  </div>
+</div>
+
+<dialog id="product-dialog">
+  <h2 id="dialog-title">Add watch target</h2>
+  <div class="field">
+    <label>Name</label>
+    <input type="text" id="p-name" placeholder="OP-09 Booster Box — Best Buy">
+  </div>
+  <div class="field">
+    <label>Product page URL</label>
+    <input type="url" id="p-url" placeholder="https://…">
+  </div>
+  <div class="field">
+    <label>Out-of-stock phrases (comma-separated, checked first)</label>
+    <input type="text" id="p-out" placeholder="sold out, coming soon, out of stock">
+    <div class="hint">Open the page while it's sold out and copy the exact wording it shows.</div>
+  </div>
+  <div class="field">
+    <label>In-stock phrases (comma-separated)</label>
+    <input type="text" id="p-in" placeholder="add to cart, in stock">
+    <div class="hint">Matching is case-insensitive. If neither list matches, status shows "unknown".</div>
+  </div>
+  <div class="row" style="justify-content:flex-end">
+    <button onclick="document.getElementById('product-dialog').close()">Cancel</button>
+    <button class="primary" onclick="saveProduct()">Save</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let editingId = null;
+let settingsDirty = false;
+let latest = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => (s ?? "").replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), 3500);
+}
+
+async function api(path, method = "GET", body = null) {
+  const resp = await fetch(path, {
+    method,
+    headers: body ? {"Content-Type": "application/json"} : {},
+    body: body ? JSON.stringify(body) : null,
+  });
+  const data = await resp.json().catch(() => ({}));
+  if (!resp.ok) throw new Error(data.error || resp.statusText);
+  return data;
+}
+
+const STATUS_LABELS = {
+  in_stock: "In stock", out_of_stock: "Out of stock", unknown: "Unknown",
+  error: "Fetch failed", not_checked: "Not checked yet",
+};
+
+function ago(ts) {
+  if (!ts) return "";
+  const s = Math.max(0, Math.round(latest.now - ts));
+  if (s < 60) return `${s}s ago`;
+  if (s < 3600) return `${Math.round(s / 60)}m ago`;
+  return `${Math.round(s / 3600)}h ago`;
+}
+
+function render() {
+  const box = $("products");
+  if (!latest.products.length) {
+    box.innerHTML = `<div class="empty">Nothing watched yet — add a product page above.</div>`;
+  } else {
+    box.innerHTML = latest.products.map(p => `
+      <div class="product">
+        <div class="info">
+          <span class="name">${esc(p.name)}</span>
+          <span class="pill ${p.status}">${STATUS_LABELS[p.status] || p.status}</span>
+          <div><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div>
+          <div class="meta">
+            ${p.last_checked ? "Checked " + ago(p.last_checked) : ""}
+            ${p.error ? " — " + esc(p.error) : ""}
+            ${p.notified_at ? " — pinged " + ago(p.notified_at) : ""}
+          </div>
+        </div>
+        <div class="actions">
+          <button onclick="checkOne('${p.id}')">Check</button>
+          <button onclick="openProductDialog('${p.id}')">Edit</button>
+          <button class="danger" onclick="deleteProduct('${p.id}', '${esc(p.name).replace(/'/g, "\\'")}')">Delete</button>
+        </div>
+      </div>`).join("");
+  }
+
+  if (!settingsDirty) {
+    const s = latest.settings;
+    $("ntfy").value = s.notifications.ntfy_topic || "";
+    $("discord").value = s.notifications.discord_webhook || "";
+    $("desktop").checked = !!s.notifications.desktop;
+    $("interval").value = s.check_interval_minutes;
+    $("renotify").value = s.renotify_minutes;
+    $("paused").checked = !!s.paused;
+  }
+
+  if (latest.settings.paused) {
+    $("next-check").textContent = "Paused";
+  } else if (latest.next_check_at) {
+    const s = Math.max(0, Math.round(latest.next_check_at - latest.now));
+    $("next-check").textContent = `Next check in ${Math.floor(s / 60)}m ${s % 60}s`;
+  }
+}
+
+async function refresh() {
+  try {
+    latest = await api("/api/state");
+    render();
+  } catch (e) { $("next-check").textContent = "Server unreachable"; }
+}
+
+["ntfy","discord","desktop","interval","renotify","paused"].forEach(id =>
+  $(id).addEventListener("input", () => settingsDirty = true));
+
+async function saveSettings() {
+  try {
+    await api("/api/settings", "POST", {
+      check_interval_minutes: $("interval").value,
+      renotify_minutes: $("renotify").value,
+      paused: $("paused").checked,
+      notifications: {
+        ntfy_topic: $("ntfy").value,
+        discord_webhook: $("discord").value,
+        desktop: $("desktop").checked,
+      },
+    });
+    settingsDirty = false;
+    toast("Settings saved");
+    refresh();
+  } catch (e) { toast("Error: " + e.message); }
+}
+
+function openProductDialog(id = null) {
+  editingId = id;
+  const p = id ? latest.products.find(x => x.id === id) : null;
+  $("dialog-title").textContent = p ? "Edit watch target" : "Add watch target";
+  $("p-name").value = p ? p.name : "";
+  $("p-url").value = p ? p.url : "";
+  $("p-out").value = p ? p.out_of_stock_text.join(", ") : "sold out, out of stock";
+  $("p-in").value = p ? p.in_stock_text.join(", ") : "add to cart";
+  $("product-dialog").showModal();
+}
+
+async function saveProduct() {
+  const body = {
+    name: $("p-name").value,
+    url: $("p-url").value,
+    out_of_stock_text: $("p-out").value,
+    in_stock_text: $("p-in").value,
+  };
+  try {
+    if (editingId) await api(`/api/products/${editingId}`, "PUT", body);
+    else await api("/api/products", "POST", body);
+    $("product-dialog").close();
+    toast(editingId ? "Saved — rechecking now" : "Added — checking now");
+    setTimeout(refresh, 1500);
+    refresh();
+  } catch (e) { toast("Error: " + e.message); }
+}
+
+async function deleteProduct(id, name) {
+  if (!confirm(`Stop watching "${name}"?`)) return;
+  try { await api(`/api/products/${id}`, "DELETE"); refresh(); }
+  catch (e) { toast("Error: " + e.message); }
+}
+
+async function checkOne(id) {
+  await api(`/api/check/${id}`, "POST");
+  toast("Checking…");
+  setTimeout(refresh, 2000);
+}
+
+async function checkAll() {
+  await api("/api/check", "POST");
+  toast("Checking all targets…");
+  setTimeout(refresh, 2500);
+}
+
+async function testNotification() {
+  try {
+    const r = await api("/api/test-notification", "POST");
+    toast("Test sent via: " + r.sent.join(", "));
+  } catch (e) { toast(e.message); }
+}
+
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>

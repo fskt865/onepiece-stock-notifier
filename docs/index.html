@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stock Notifier</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1c2230; --muted: #6b7280;
+    --line: #e3e6ec; --accent: #2563eb; --accent-text: #ffffff;
+    --green: #157f3d; --green-bg: #e5f6ec; --red: #b3261e; --red-bg: #fbeae9;
+    --amber: #92600a; --amber-bg: #fdf3dd; --gray: #5b6472; --gray-bg: #eceef2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171d; --card: #1d2129; --text: #e8eaf0; --muted: #99a1af;
+      --line: #2c313b; --accent: #5b8bf5; --accent-text: #0e1116;
+      --green: #5ad189; --green-bg: #16301f; --red: #f0857d; --red-bg: #35201e;
+      --amber: #e5b567; --amber-bg: #322817; --gray: #aab2bf; --gray-bg: #262b34;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 60px; }
+  header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  h1 { font-size: 22px; margin: 0; }
+  #sub { color: var(--muted); font-size: 13px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 16px; margin-bottom: 16px; }
+  .card h2 { font-size: 15px; margin: 0 0 12px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 3px; }
+  input[type=text], input[type=url], input[type=number], input[type=password] {
+    width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
+    background: var(--bg); color: var(--text); font: inherit; }
+  .field { flex: 1 1 180px; }
+  .field.small { flex: 0 1 170px; }
+  button { padding: 7px 14px; border: 1px solid var(--line); border-radius: 7px;
+           background: var(--card); color: var(--text); font: inherit; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  button.danger:hover { border-color: var(--red); color: var(--red); }
+  button:disabled { opacity: .5; cursor: default; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px;
+          font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .pill.in_stock { background: var(--green-bg); color: var(--green); }
+  .pill.out_of_stock { background: var(--gray-bg); color: var(--gray); }
+  .pill.unknown { background: var(--amber-bg); color: var(--amber); }
+  .pill.not_checked { background: var(--gray-bg); color: var(--muted); }
+  .product { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0;
+             border-top: 1px solid var(--line); }
+  .product:first-of-type { border-top: none; }
+  .product .info { flex: 1; min-width: 0; }
+  .product .name { font-weight: 600; }
+  .product a { color: var(--accent); font-size: 13px; word-break: break-all; text-decoration: none; }
+  .product a:hover { text-decoration: underline; }
+  .product .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .product .actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .product .actions button { padding: 4px 10px; font-size: 13px; }
+  .empty { color: var(--muted); padding: 12px 0; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+           background: var(--text); color: var(--bg); padding: 9px 18px; border-radius: 8px;
+           font-size: 14px; opacity: 0; transition: opacity .25s; pointer-events: none;
+           max-width: 90vw; }
+  .toast.show { opacity: 1; }
+  dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--card);
+           color: var(--text); padding: 20px; width: min(560px, 92vw); }
+  dialog::backdrop { background: rgba(0,0,0,.45); }
+  dialog h2 { margin-top: 0; }
+  dialog .field { margin-bottom: 12px; }
+  details summary { cursor: pointer; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🃏 Stock Notifier</h1>
+    <span id="sub">Loading…</span>
+  </header>
+
+  <div class="card" id="token-card">
+    <h2>Editing access</h2>
+    <p id="token-status" class="hint" style="margin-top:0"></p>
+    <details id="token-details">
+      <summary>Set up / change GitHub token</summary>
+      <p class="hint">
+        Viewing works without a token. To add or edit targets and trigger checks, create a
+        <b>fine-grained personal access token</b> at
+        GitHub → Settings → Developer settings → Fine-grained tokens, scoped to
+        <b>only this repository</b> with <b>Contents: Read and write</b> and
+        <b>Actions: Read and write</b>. It's stored only in this browser.
+      </p>
+      <div class="row">
+        <div class="field"><input type="password" id="token-input" placeholder="github_pat_…"></div>
+        <button class="primary" onclick="saveToken()">Save token</button>
+        <button onclick="clearToken()">Forget</button>
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content: space-between;">
+      <h2 style="margin:0">Watch targets</h2>
+      <div class="row">
+        <button id="btn-refresh" onclick="load(true)">Refresh</button>
+        <button id="btn-run" onclick="runNow()">Run check now</button>
+        <button class="primary" id="btn-add" onclick="openProductDialog()">+ Add target</button>
+      </div>
+    </div>
+    <div id="products" class="empty">Loading…</div>
+    <p class="hint">Checks run automatically about every 10–20 minutes via GitHub Actions.
+       Notifications go to the ntfy topic / Discord webhook set as repository secrets.</p>
+  </div>
+
+  <div class="card">
+    <h2>Options</h2>
+    <div class="row">
+      <div class="field small">
+        <label>Re-ping after (minutes, 0 = once per restock)</label>
+        <input type="number" id="renotify" min="0">
+      </div>
+      <button class="primary" style="align-self:flex-end" onclick="saveOptions()">Save</button>
+    </div>
+  </div>
+</div>
+
+<dialog id="product-dialog">
+  <h2 id="dialog-title">Add watch target</h2>
+  <div class="field">
+    <label>Name</label>
+    <input type="text" id="p-name" placeholder="OP-09 Booster Box — TCGPlayer">
+  </div>
+  <div class="field">
+    <label>Product page URL</label>
+    <input type="url" id="p-url" placeholder="https://…">
+  </div>
+  <div class="field">
+    <label>Out-of-stock phrases (comma-separated, checked first)</label>
+    <input type="text" id="p-out" placeholder="sold out, coming soon, out of stock">
+    <div class="hint">Open the page while it's sold out and copy the exact wording it shows.</div>
+  </div>
+  <div class="field">
+    <label>In-stock phrases (comma-separated)</label>
+    <input type="text" id="p-in" placeholder="add to cart, in stock">
+    <div class="hint">Matching is case-insensitive. If neither list matches, status shows "unknown".</div>
+  </div>
+  <div class="row" style="justify-content:flex-end">
+    <button onclick="document.getElementById('product-dialog').close()">Cancel</button>
+    <button class="primary" onclick="saveProduct()">Save</button>
+  </div>
+</dialog>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const REPO = "fskt865/onepiece-stock-notifier";
+const API = `https://api.github.com/repos/${REPO}`;
+const WORKFLOW = "check.yml";
+
+let config = null, configSha = null, state = {}, editingIndex = null;
+
+const $ = id => document.getElementById(id);
+const esc = s => (s ?? "").replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function token() { try { return localStorage.getItem("gh_token") || ""; } catch { return ""; } }
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove("show"), 4000);
+}
+
+function headers(json = false) {
+  const h = {"Accept": "application/vnd.github+json",
+             "X-GitHub-Api-Version": "2022-11-28"};
+  if (token()) h["Authorization"] = "Bearer " + token();
+  if (json) h["Content-Type"] = "application/json";
+  return h;
+}
+
+async function ghGetFile(path) {
+  const resp = await fetch(`${API}/contents/${path}?t=${Date.now()}`, {headers: headers()});
+  if (resp.status === 404) return {json: null, sha: null};
+  if (!resp.ok) throw new Error(`GitHub API ${resp.status} loading ${path}`);
+  const data = await resp.json();
+  const text = new TextDecoder().decode(
+    Uint8Array.from(atob(data.content.replace(/\n/g, "")), c => c.charCodeAt(0)));
+  return {json: JSON.parse(text), sha: data.sha};
+}
+
+async function ghPutConfig(message) {
+  const body = JSON.stringify(config, null, 2) + "\n";
+  const content = btoa(String.fromCharCode(...new TextEncoder().encode(body)));
+  const resp = await fetch(`${API}/contents/config.json`, {
+    method: "PUT", headers: headers(true),
+    body: JSON.stringify({message, content, sha: configSha}),
+  });
+  if (resp.status === 409) {
+    await load(true);
+    throw new Error("Someone else changed the config — reloaded, please retry.");
+  }
+  if (resp.status === 401 || resp.status === 403 || resp.status === 404) {
+    throw new Error("Not authorized — check your token (needs Contents: Read and write on this repo).");
+  }
+  if (!resp.ok) throw new Error(`GitHub API ${resp.status}`);
+  configSha = (await resp.json()).content.sha;
+}
+
+const STATUS_LABELS = {in_stock: "In stock", out_of_stock: "Out of stock",
+                       unknown: "Unknown", not_checked: "Not checked yet"};
+
+function ago(ts) {
+  if (!ts) return "";
+  const s = Math.max(0, Math.round(Date.now() / 1000 - ts));
+  if (s < 60) return `${s}s ago`;
+  if (s < 3600) return `${Math.round(s / 60)}m ago`;
+  if (s < 172800) return `${Math.round(s / 3600)}h ago`;
+  return `${Math.round(s / 86400)}d ago`;
+}
+
+function render() {
+  const box = $("products");
+  if (!config.products.length) {
+    box.className = "empty";
+    box.textContent = "Nothing watched yet — add a product page above.";
+  } else {
+    box.className = "";
+    box.innerHTML = config.products.map((p, i) => {
+      const st = state[p.name] || {};
+      const status = st.status || "not_checked";
+      return `
+      <div class="product">
+        <div class="info">
+          <span class="name">${esc(p.name)}</span>
+          <span class="pill ${status}">${STATUS_LABELS[status] || esc(status)}</span>
+          <div><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div>
+          <div class="meta">
+            ${st.checked_at ? "Checked " + ago(st.checked_at) : ""}
+            ${st.notified_at ? " — pinged " + ago(st.notified_at) : ""}
+          </div>
+        </div>
+        <div class="actions">
+          <button onclick="openProductDialog(${i})">Edit</button>
+          <button class="danger" onclick="deleteProduct(${i})">Delete</button>
+        </div>
+      </div>`;
+    }).join("");
+  }
+  $("renotify").value = config.renotify_minutes ?? 0;
+
+  const checks = Object.values(state).map(s => s.checked_at || 0);
+  const last = checks.length ? Math.max(...checks) : 0;
+  $("sub").textContent = last ? `Last check ${ago(last)}` : "No checks recorded yet";
+
+  const hasToken = !!token();
+  $("token-status").textContent = hasToken
+    ? "Token saved in this browser — editing enabled."
+    : "View-only: no token set. Open below to enable editing.";
+  $("token-details").open = !hasToken;
+  ["btn-run", "btn-add"].forEach(id => $(id).disabled = !hasToken);
+}
+
+async function load(showToast = false) {
+  try {
+    const [c, s] = await Promise.all([ghGetFile("config.json"), ghGetFile("state.json")]);
+    config = c.json || {renotify_minutes: 120, products: []};
+    config.products = config.products || [];
+    configSha = c.sha;
+    state = s.json || {};
+    render();
+    if (showToast) toast("Refreshed");
+  } catch (e) {
+    $("sub").textContent = "";
+    $("products").className = "empty";
+    $("products").textContent = "Couldn't load: " + e.message;
+  }
+}
+
+function saveToken() {
+  const v = $("token-input").value.trim();
+  if (!v) return toast("Paste a token first");
+  try { localStorage.setItem("gh_token", v); } catch { return toast("This browser blocks storage"); }
+  $("token-input").value = "";
+  toast("Token saved");
+  load();
+}
+function clearToken() {
+  try { localStorage.removeItem("gh_token"); } catch {}
+  toast("Token forgotten");
+  render();
+}
+
+function parsePhrases(v) { return v.split(",").map(x => x.trim()).filter(Boolean); }
+
+function openProductDialog(index = null) {
+  editingIndex = index;
+  const p = index !== null ? config.products[index] : null;
+  $("dialog-title").textContent = p ? "Edit watch target" : "Add watch target";
+  $("p-name").value = p ? p.name : "";
+  $("p-url").value = p ? p.url : "";
+  $("p-out").value = p ? (p.out_of_stock_text || []).join(", ") : "sold out, out of stock";
+  $("p-in").value = p ? (p.in_stock_text || []).join(", ") : "add to cart";
+  $("product-dialog").showModal();
+}
+
+async function saveProduct() {
+  const name = $("p-name").value.trim(), url = $("p-url").value.trim();
+  if (!name || !url) return toast("Name and URL are required");
+  if (!/^https?:\/\//.test(url)) return toast("URL must start with http(s)://");
+  const product = {name, url,
+                   out_of_stock_text: parsePhrases($("p-out").value),
+                   in_stock_text: parsePhrases($("p-in").value)};
+  if (editingIndex !== null) config.products[editingIndex] = product;
+  else config.products.push(product);
+  try {
+    await ghPutConfig(`${editingIndex !== null ? "Edit" : "Add"} watch target: ${name}`);
+    $("product-dialog").close();
+    render();
+    toast("Saved — takes effect on the next check");
+  } catch (e) { toast(e.message); }
+}
+
+async function deleteProduct(index) {
+  const p = config.products[index];
+  if (!confirm(`Stop watching "${p.name}"?`)) return;
+  config.products.splice(index, 1);
+  try {
+    await ghPutConfig(`Remove watch target: ${p.name}`);
+    render();
+    toast("Removed");
+  } catch (e) { toast(e.message); await load(); }
+}
+
+async function saveOptions() {
+  config.renotify_minutes = Math.max(0, parseInt($("renotify").value, 10) || 0);
+  try { await ghPutConfig("Update options"); toast("Saved"); }
+  catch (e) { toast(e.message); }
+}
+
+async function runNow() {
+  try {
+    const resp = await fetch(`${API}/actions/workflows/${WORKFLOW}/dispatches`, {
+      method: "POST", headers: headers(true), body: JSON.stringify({ref: "main"}),
+    });
+    if (resp.status === 204) toast("Check started — results in a minute or two, then Refresh");
+    else if (resp.status === 401 || resp.status === 403 || resp.status === 404)
+      toast("Not authorized — token needs Actions: Read and write on this repo.");
+    else toast(`GitHub API ${resp.status}`);
+  } catch (e) { toast(e.message); }
+}
+
+load();
+setInterval(load, 60000);
+</script>
+</body>
+</html>
