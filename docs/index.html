@@ -31,7 +31,7 @@
   .card h2 { font-size: 15px; margin: 0 0 12px; }
   .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 3px; }
-  input[type=text], input[type=url], input[type=number], input[type=password] {
+  input[type=text], input[type=url], input[type=number], input[type=password], select {
     width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
     background: var(--bg); color: var(--text); font: inherit; }
   .field { flex: 1 1 180px; }
@@ -48,6 +48,7 @@
   .pill.out_of_stock { background: var(--gray-bg); color: var(--gray); }
   .pill.unknown { background: var(--amber-bg); color: var(--amber); }
   .pill.not_checked { background: var(--gray-bg); color: var(--muted); }
+  .pill.watching { background: var(--gray-bg); color: var(--accent); }
   .product { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0;
              border-top: 1px solid var(--line); }
   .product:first-of-type { border-top: none; }
@@ -129,22 +130,40 @@
 <dialog id="product-dialog">
   <h2 id="dialog-title">Add watch target</h2>
   <div class="field">
+    <label>Watch type</label>
+    <select id="p-type" onchange="typeChanged()">
+      <option value="stock">Restock — a specific product's page comes back in stock</option>
+      <option value="new_items">Launches — new listings appear on a store/category page</option>
+    </select>
+  </div>
+  <div class="field">
     <label>Name</label>
     <input type="text" id="p-name" placeholder="OP-09 Booster Box — TCGPlayer">
   </div>
   <div class="field">
-    <label>Product page URL</label>
+    <label id="url-label">Product page URL</label>
     <input type="url" id="p-url" placeholder="https://…">
   </div>
-  <div class="field">
-    <label>Out-of-stock phrases (comma-separated, checked first)</label>
-    <input type="text" id="p-out" placeholder="sold out, coming soon, out of stock">
-    <div class="hint">Open the page while it's sold out and copy the exact wording it shows.</div>
+  <div id="stock-fields">
+    <div class="field">
+      <label>Out-of-stock phrases (comma-separated, checked first)</label>
+      <input type="text" id="p-out" placeholder="sold out, coming soon, out of stock">
+      <div class="hint">Open the page while it's sold out and copy the exact wording it shows.</div>
+    </div>
+    <div class="field">
+      <label>In-stock phrases (comma-separated)</label>
+      <input type="text" id="p-in" placeholder="add to cart, in stock">
+      <div class="hint">Matching is case-insensitive. If neither list matches, status shows "unknown".</div>
+    </div>
   </div>
-  <div class="field">
-    <label>In-stock phrases (comma-separated)</label>
-    <input type="text" id="p-in" placeholder="add to cart, in stock">
-    <div class="hint">Matching is case-insensitive. If neither list matches, status shows "unknown".</div>
+  <div id="new-fields" hidden>
+    <div class="field">
+      <label>Link keywords (comma-separated — a link counts only if it contains ALL of them)</label>
+      <input type="text" id="p-kw" placeholder="/products/">
+      <div class="hint">Matched against each link's URL + text, case-insensitive. On most webstores
+        <code>/products/</code> alone works. The first check records what's already listed;
+        you're pinged only when something new appears after that.</div>
+    </div>
   </div>
   <div class="row" style="justify-content:flex-end">
     <button onclick="document.getElementById('product-dialog').close()">Cancel</button>
@@ -211,7 +230,8 @@ async function ghPutConfig(message) {
 }
 
 const STATUS_LABELS = {in_stock: "In stock", out_of_stock: "Out of stock",
-                       unknown: "Unknown", not_checked: "Not checked yet"};
+                       unknown: "Unknown", not_checked: "Not checked yet",
+                       watching: "Watching for launches"};
 
 function ago(ts) {
   if (!ts) return "";
@@ -240,6 +260,7 @@ function render() {
           <div><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div>
           <div class="meta">
             ${st.checked_at ? "Checked " + ago(st.checked_at) : ""}
+            ${st.item_count ? " — tracking " + st.item_count + " listings" : ""}
             ${st.notified_at ? " — pinged " + ago(st.notified_at) : ""}
           </div>
         </div>
@@ -296,14 +317,24 @@ function clearToken() {
 
 function parsePhrases(v) { return v.split(",").map(x => x.trim()).filter(Boolean); }
 
+function typeChanged() {
+  const isNew = $("p-type").value === "new_items";
+  $("stock-fields").hidden = isNew;
+  $("new-fields").hidden = !isNew;
+  $("url-label").textContent = isNew ? "Store / category page URL" : "Product page URL";
+}
+
 function openProductDialog(index = null) {
   editingIndex = index;
   const p = index !== null ? config.products[index] : null;
   $("dialog-title").textContent = p ? "Edit watch target" : "Add watch target";
+  $("p-type").value = p && p.type === "new_items" ? "new_items" : "stock";
   $("p-name").value = p ? p.name : "";
   $("p-url").value = p ? p.url : "";
   $("p-out").value = p ? (p.out_of_stock_text || []).join(", ") : "sold out, out of stock";
   $("p-in").value = p ? (p.in_stock_text || []).join(", ") : "add to cart";
+  $("p-kw").value = p ? (p.keywords || []).join(", ") : "/products/";
+  typeChanged();
   $("product-dialog").showModal();
 }
 
@@ -311,9 +342,14 @@ async function saveProduct() {
   const name = $("p-name").value.trim(), url = $("p-url").value.trim();
   if (!name || !url) return toast("Name and URL are required");
   if (!/^https?:\/\//.test(url)) return toast("URL must start with http(s)://");
-  const product = {name, url,
-                   out_of_stock_text: parsePhrases($("p-out").value),
-                   in_stock_text: parsePhrases($("p-in").value)};
+  const isNew = $("p-type").value === "new_items";
+  if (isNew && !parsePhrases($("p-kw").value).length)
+    return toast("At least one link keyword is required");
+  const product = isNew
+    ? {name, type: "new_items", url, keywords: parsePhrases($("p-kw").value)}
+    : {name, url,
+       out_of_stock_text: parsePhrases($("p-out").value),
+       in_stock_text: parsePhrases($("p-in").value)};
   if (editingIndex !== null) config.products[editingIndex] = product;
   else config.products.push(product);
   try {

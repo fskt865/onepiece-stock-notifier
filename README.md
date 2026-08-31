@@ -33,6 +33,18 @@ One-time setup for whoever will use it:
    otherwise the schedule handles it. Current status is committed back to
    `state.json` after every run.
 
+There are two watch types:
+
+- **Restock** — a specific product page, detected via sold-out/in-stock phrases
+  (as described below).
+- **Launches** (`"type": "new_items"`) — a store or category page, watched for
+  *new listings appearing*. Links matching all the configured `keywords`
+  (against URL + link text, case-insensitive) are tracked; the first check
+  records a baseline and later checks ping when a new one shows up. The config
+  ships with launch watches on the official One Piece Card Game products page
+  and LA Sports Cards' One Piece collections. Launch watches run only in the
+  Actions checker, not the local Flask app.
+
 ## Local alternatives
 
 ## Setup

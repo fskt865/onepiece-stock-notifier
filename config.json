@@ -6,5 +6,35 @@
     "discord_webhook": "",
     "desktop": false
   },
-  "products": []
+  "products": [
+    {
+      "name": "Official One Piece Card Game - new product launches",
+      "type": "new_items",
+      "url": "https://en.onepiece-cardgame.com/products/",
+      "keywords": [
+        "products/",
+        ".html"
+      ],
+      "id": "dfe105cc"
+    },
+    {
+      "name": "LA Sports Cards (Burbank/Glendale) - new One Piece listings",
+      "type": "new_items",
+      "url": "https://lasportscards.com/collections/one-piece",
+      "keywords": [
+        "/products/"
+      ],
+      "id": "f1d209a6"
+    },
+    {
+      "name": "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings",
+      "type": "new_items",
+      "url": "https://lasportscards.com/collections/one-piece-japanese",
+      "keywords": [
+        "/products/"
+      ],
+      "id": "f9fd9208"
+    }
+  ],
+  "paused": false
 }

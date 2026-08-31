@@ -10,14 +10,17 @@ See config.example.json / README.md for configuration.
 """
 
 import argparse
+import html
 import json
 import os
 import random
+import re
 import subprocess
 import sys
 import time
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urljoin
 
 import requests
 
@@ -63,11 +66,35 @@ def check_product(product):
     return "unknown"
 
 
-def notify(config, product, status_note=""):
-    title = "In stock!"
-    body = f"{product['name']} is available\n{product['url']}"
-    if status_note:
-        body += f"\n({status_note})"
+LINK_RE = re.compile(r'<a\s[^>]*?href="([^"]+)"[^>]*>(.*?)</a>', re.I | re.S)
+
+
+def check_new_items(product):
+    """Return {absolute_url: link_text} for page links matching every keyword.
+
+    Used by 'new_items' (launch watch) targets: a store category or product
+    listing page where new links appearing mean a new product launched.
+    """
+    resp = requests.get(product["url"], headers=DEFAULT_HEADERS, timeout=30)
+    resp.raise_for_status()
+    keywords = [k.lower() for k in product.get("keywords", []) if k.strip()]
+    items = {}
+    for href, inner in LINK_RE.findall(resp.text):
+        url = urljoin(resp.url, html.unescape(href))
+        url = url.split("#", 1)[0].split("?", 1)[0]
+        text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", inner))).strip()
+        hay = (url + " " + text).lower()
+        if keywords and all(k in hay for k in keywords):
+            if url not in items or (text and not items[url]):
+                items[url] = text
+    return items
+
+
+def notify(config, product, status_note="", title="In stock!", body=None):
+    if body is None:
+        body = f"{product['name']} is available\n{product['url']}"
+        if status_note:
+            body += f"\n({status_note})"
 
     notifiers = config.get("notifications", {})
     sent = []
@@ -118,11 +145,58 @@ def notify(config, product, status_note=""):
     return sent
 
 
+def run_new_items_check(config, state, product, prev):
+    name = product["name"]
+    try:
+        items = check_new_items(product)
+    except requests.RequestException as e:
+        log(f"{name}: fetch failed ({e})")
+        return
+    now = time.time()
+
+    if not items:
+        log(f"{name}: unknown (no matching listings found)")
+        if prev.get("status") != "unknown":
+            notify(config, product,
+                   "warning: no matching listings found - check the page/keywords")
+        state[name] = {"status": "unknown", "seen": prev.get("seen", []),
+                       "checked_at": now, "notified_at": prev.get("notified_at", 0)}
+        save_state(state)
+        return
+
+    seen = prev.get("seen")
+    notified_at = prev.get("notified_at", 0)
+    if seen is None:
+        # First look at this page: record what's already there, don't ping.
+        log(f"{name}: baseline recorded ({len(items)} listings)")
+    else:
+        new = [u for u in items if u not in set(seen)]
+        if new:
+            lines = [f"- {items[u] or u}" for u in new[:5]]
+            if len(new) > 5:
+                lines.append(f"...and {len(new) - 5} more")
+            notify(config, product, title="New listing!",
+                   body="\n".join([f"{name}:"] + lines + [new[0]]))
+            notified_at = now
+        log(f"{name}: watching ({len(items)} listings, {len(new)} new)")
+
+    state[name] = {"status": "watching",
+                   "seen": sorted(set(seen or []) | set(items)),
+                   "item_count": len(items),
+                   "checked_at": now, "notified_at": notified_at}
+    save_state(state)
+
+
 def run_checks(config, state):
     renotify_after = config.get("renotify_minutes", 0) * 60
     for product in config["products"]:
         name = product["name"]
         prev = state.get(name, {})
+
+        if product.get("type") == "new_items":
+            run_new_items_check(config, state, product, prev)
+            continue
+
         try:
             status = check_product(product)
         except requests.RequestException as e:

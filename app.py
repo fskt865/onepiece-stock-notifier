@@ -80,6 +80,9 @@ def save_state(state):
 
 def run_check(product, config):
     """Check one product, update state, and notify on the right transitions."""
+    if product.get("type") == "new_items":
+        # Launch watches run in the GitHub Actions checker; the local app skips them.
+        return
     try:
         status = core.check_product(product)
         error = None
