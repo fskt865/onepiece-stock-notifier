@@ -52,7 +52,7 @@ def save_state(state):
 
 def check_product(product):
     """Return 'in_stock', 'out_of_stock', or 'unknown' for one product entry."""
-    resp = requests.get(product["url"], headers=DEFAULT_HEADERS, timeout=30)
+    resp = requests.get(resolve_url(product["url"]), headers=DEFAULT_HEADERS, timeout=30)
     resp.raise_for_status()
     page = resp.text.lower()
 
@@ -67,6 +67,13 @@ def check_product(product):
 
 
 LINK_RE = re.compile(r'<a\s[^>]*?href="([^"]+)"[^>]*>(.*?)</a>', re.I | re.S)
+SECRET_RE = re.compile(r"\{([A-Z][A-Z0-9_]*)\}")
+
+
+def resolve_url(url):
+    """Replace {SECRET_NAME} placeholders with env vars (used for API keys,
+    which must stay out of the public config)."""
+    return SECRET_RE.sub(lambda m: os.environ.get(m.group(1), m.group(0)), url)
 
 
 def check_new_items(product):
@@ -75,7 +82,7 @@ def check_new_items(product):
     Used by 'new_items' (launch watch) targets: a store category or product
     listing page where new links appearing mean a new product launched.
     """
-    resp = requests.get(product["url"], headers=DEFAULT_HEADERS, timeout=30)
+    resp = requests.get(resolve_url(product["url"]), headers=DEFAULT_HEADERS, timeout=30)
     resp.raise_for_status()
 
     # Advanced mode: a regex over the raw page (for SPA sites that embed
@@ -205,6 +212,14 @@ def run_checks(config, state):
     for product in config["products"]:
         name = product["name"]
         prev = state.get(name, {})
+
+        missing = SECRET_RE.findall(resolve_url(product["url"]))
+        if missing:
+            log(f"{name}: skipped (set the {missing[0]} secret to enable this target)")
+            state[name] = {"status": "missing_secret", "checked_at": time.time(),
+                           "notified_at": prev.get("notified_at", 0)}
+            save_state(state)
+            continue
 
         if product.get("type") == "new_items":
             run_new_items_check(config, state, product, prev)

@@ -49,6 +49,7 @@
   .pill.unknown { background: var(--amber-bg); color: var(--amber); }
   .pill.not_checked { background: var(--gray-bg); color: var(--muted); }
   .pill.watching { background: var(--gray-bg); color: var(--accent); }
+  .pill.missing_secret { background: var(--amber-bg); color: var(--amber); }
   .product { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0;
              border-top: 1px solid var(--line); }
   .product:first-of-type { border-top: none; }
@@ -242,7 +243,8 @@ async function ghPutConfig(message) {
 
 const STATUS_LABELS = {in_stock: "In stock", out_of_stock: "Out of stock",
                        unknown: "Unknown", not_checked: "Not checked yet",
-                       watching: "Watching for launches"};
+                       watching: "Watching for launches",
+                       missing_secret: "Needs an API-key secret"};
 
 function ago(ts) {
   if (!ts) return "";

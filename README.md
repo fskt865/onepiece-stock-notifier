@@ -22,6 +22,12 @@ One-time setup for whoever will use it:
    (repo → Settings → Secrets and variables → Actions). Optionally add a
    `DISCORD_WEBHOOK` secret too. Secrets keep the ping channel private even
    though the repo is public.
+
+   A target URL may contain `{SOME_SECRET}` placeholders, filled from
+   same-named repo secrets at check time — used for retailer API keys that
+   can't go in the public config. The preloaded Best Buy target needs a free
+   key from https://developer.bestbuy.com saved as the `BESTBUY_API_KEY`
+   secret (until then it shows "Needs an API-key secret" and is skipped).
 2. **Editing from the GUI** — the Pages site is view-only until you give it a
    token. Create a *fine-grained* personal access token (GitHub → Settings →
    Developer settings → Fine-grained tokens) scoped to **only this repo** with
