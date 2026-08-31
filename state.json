@@ -16,7 +16,7 @@
       "https://en.onepiece-cardgame.com/products/sleeve044.html"
     ],
     "item_count": 12,
-    "checked_at": 1788219829.08478,
+    "checked_at": 1788219913.5564141,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -44,7 +44,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1788219829.6824627,
+    "checked_at": 1788219914.2121809,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -57,7 +57,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1788219830.1401844,
+    "checked_at": 1788219914.4685545,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -70,7 +70,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788219830.514436,
+    "checked_at": 1788219914.7760177,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -83,7 +83,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788219830.9352624,
+    "checked_at": 1788219914.9999542,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -94,7 +94,12 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 3,
-    "checked_at": 1788219831.983863,
+    "checked_at": 1788219915.795889,
+    "notified_at": 0
+  },
+  "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
+    "status": "missing_secret",
+    "checked_at": 1788219915.7964404,
     "notified_at": 0
   }
 }
