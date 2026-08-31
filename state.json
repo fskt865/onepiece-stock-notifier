@@ -1,1 +1,63 @@
-{}
+{
+  "Official One Piece Card Game - new product launches": {
+    "status": "watching",
+    "seen": [
+      "https://en.onepiece-cardgame.com/products/3rd_anniversary_set_cn.html",
+      "https://en.onepiece-cardgame.com/products/card_collection_asl.html",
+      "https://en.onepiece-cardgame.com/products/collection-drama002.html",
+      "https://en.onepiece-cardgame.com/products/collection-drama003.html",
+      "https://en.onepiece-cardgame.com/products/collection-flame.html",
+      "https://en.onepiece-cardgame.com/products/eb05.html",
+      "https://en.onepiece-cardgame.com/products/heroines-special.html",
+      "https://en.onepiece-cardgame.com/products/playmat_flame-flame-fruit.html",
+      "https://en.onepiece-cardgame.com/products/sd01.html",
+      "https://en.onepiece-cardgame.com/products/sleeve041.html",
+      "https://en.onepiece-cardgame.com/products/sleeve043.html",
+      "https://en.onepiece-cardgame.com/products/sleeve044.html"
+    ],
+    "item_count": 12,
+    "checked_at": 1788218866.8402495,
+    "notified_at": 0
+  },
+  "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
+    "status": "watching",
+    "seen": [
+      "https://lasportscards.com/products/12080",
+      "https://lasportscards.com/products/12081",
+      "https://lasportscards.com/products/12082",
+      "https://lasportscards.com/products/12083",
+      "https://lasportscards.com/products/12084",
+      "https://lasportscards.com/products/12085",
+      "https://lasportscards.com/products/12086",
+      "https://lasportscards.com/products/12087",
+      "https://lasportscards.com/products/12088",
+      "https://lasportscards.com/products/12089",
+      "https://lasportscards.com/products/12090",
+      "https://lasportscards.com/products/12091",
+      "https://lasportscards.com/products/12092",
+      "https://lasportscards.com/products/12093",
+      "https://lasportscards.com/products/12094",
+      "https://lasportscards.com/products/12095",
+      "https://lasportscards.com/products/12096",
+      "https://lasportscards.com/products/12097",
+      "https://lasportscards.com/products/12098",
+      "https://lasportscards.com/products/12099"
+    ],
+    "item_count": 20,
+    "checked_at": 1788218867.5160625,
+    "notified_at": 0
+  },
+  "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
+    "status": "watching",
+    "seen": [
+      "https://lasportscards.com/products/one-piece-japanese-adventure-on-kamis-island-booster-box-op-15",
+      "https://lasportscards.com/products/one-piece-japanese-heroines-edition-booster-box-eb-03",
+      "https://lasportscards.com/products/one-piece-japanese-premium-the-best-vol-2-booster-pack-prb-02",
+      "https://lasportscards.com/products/one-piece-japanese-premium-the-best-vol-2-prb-02",
+      "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
+    ],
+    "item_count": 5,
+    "checked_at": 1788218868.2164748,
+    "notified_at": 0
+  }
+}
