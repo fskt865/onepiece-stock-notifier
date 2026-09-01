@@ -189,7 +189,9 @@ def notify(config, product, status_note="", title="In stock!", body=None):
     if notifiers.get("desktop", False):
         try:
             if sys.platform == "win32":
-                # Balloon tips choke on newlines inside -Command one-liners.
+                # -EncodedCommand sidesteps cmdline quoting entirely; scraped
+                # product titles can contain any metacharacters.
+                import base64
                 ps_title = title.replace("'", "''")
                 ps_body = body.replace("'", "''").replace("\r", "").replace("\n", " | ")
                 ps = (
@@ -199,8 +201,10 @@ def notify(config, product, status_note="", title="In stock!", body=None):
                     f"$n.ShowBalloonTip(10000,'{ps_title}','{ps_body}',"
                     "[System.Windows.Forms.ToolTipIcon]::Info);Start-Sleep 6"
                 )
-                subprocess.run(["powershell", "-NoProfile", "-Command", ps],
-                               check=False, timeout=20)
+                encoded = base64.b64encode(ps.encode("utf-16-le")).decode()
+                subprocess.run(
+                    ["powershell", "-NoProfile", "-EncodedCommand", encoded],
+                    check=False, timeout=20)
             else:
                 subprocess.run(["notify-send", "-u", "critical", title, body],
                                check=False, timeout=10)
