@@ -11,6 +11,7 @@ webstate.json.
 """
 
 import json
+import sys
 import threading
 import time
 import uuid
@@ -21,9 +22,11 @@ from flask import Flask, jsonify, render_template, request
 
 import stock_notifier as core
 
-BASE = Path(__file__).parent
+BASE = core.app_dir()
 CONFIG_FILE = BASE / "config.json"
 STATE_FILE = BASE / "webstate.json"
+# Templates ship inside the PyInstaller bundle, not next to the exe.
+TEMPLATE_DIR = Path(getattr(sys, "_MEIPASS", Path(__file__).parent)) / "templates"
 
 DEFAULT_CONFIG = {
     "check_interval_minutes": 10,
@@ -33,7 +36,7 @@ DEFAULT_CONFIG = {
     "products": [],
 }
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=str(TEMPLATE_DIR))
 lock = threading.RLock()
 check_requested = threading.Event()  # manual "check now"
 requested_ids = set()                # empty set while flagged = check everything
@@ -78,10 +81,49 @@ def save_state(state):
         STATE_FILE.write_text(json.dumps(state, indent=2))
 
 
+def run_new_items_check(product, config):
+    try:
+        items = core.check_new_items(product)
+        error = None
+    except requests.RequestException as exc:
+        items, error = None, core.sanitize_error(exc, product)
+
+    with lock:
+        state = load_state()
+        prev = state.get(product["id"], {})
+        now = time.time()
+        entry = {"status": "watching", "error": error, "last_checked": now,
+                 "notified_at": prev.get("notified_at", 0), "seen": prev.get("seen")}
+
+        if error is not None:
+            entry["status"] = "error"
+        elif not items:
+            entry["status"] = "unknown"
+            if prev.get("status") not in ("unknown", None):
+                core.notify(config, product,
+                            "warning: no matching listings found - check the page/keywords")
+        else:
+            seen = prev.get("seen")
+            if seen is not None:
+                new = [u for u in items if u not in set(seen)]
+                if new:
+                    lines = [f"- {items[u] or u}" for u in new[:5]]
+                    if len(new) > 5:
+                        lines.append(f"...and {len(new) - 5} more")
+                    core.notify(config, product, title="New listing!",
+                                body="\n".join([f"{product['name']}:"] + lines + [new[0]]))
+                    entry["notified_at"] = now
+            entry["seen"] = sorted(set(seen or []) | set(items))
+            entry["item_count"] = len(items)
+
+        state[product["id"]] = entry
+        save_state(state)
+
+
 def run_check(product, config):
     """Check one product, update state, and notify on the right transitions."""
     if product.get("type") == "new_items":
-        # Launch watches run in the GitHub Actions checker; the local app skips them.
+        run_new_items_check(product, config)
         return
     try:
         status = core.check_product(product)
@@ -153,8 +195,19 @@ def product_from_request(body, product_id=None):
         return None, "Name and URL are required."
     if not url.startswith(("http://", "https://")):
         return None, "URL must start with http:// or https://"
+    pid = product_id or uuid.uuid4().hex[:8]
+    if body.get("type") == "new_items":
+        product = {"id": pid, "name": name, "type": "new_items", "url": url,
+                   "keywords": parse_phrases(body.get("keywords", []))}
+        pattern = (body.get("item_pattern") or "").strip()
+        if pattern:
+            product["item_pattern"] = pattern
+            product["item_url_template"] = (body.get("item_url_template") or "{0}").strip()
+        elif not product["keywords"]:
+            return None, "At least one link keyword (or an item regex) is required."
+        return product, None
     return {
-        "id": product_id or uuid.uuid4().hex[:8],
+        "id": pid,
         "name": name,
         "url": url,
         "in_stock_text": parse_phrases(body.get("in_stock_text", [])),
@@ -178,7 +231,8 @@ def api_state():
                          "status": entry.get("status", "not_checked"),
                          "error": entry.get("error"),
                          "last_checked": entry.get("last_checked"),
-                         "notified_at": entry.get("notified_at")})
+                         "notified_at": entry.get("notified_at"),
+                         "item_count": entry.get("item_count")})
     return jsonify({
         "products": products,
         "settings": {

@@ -32,7 +32,17 @@ DEFAULT_HEADERS = {
     "Accept-Language": "en-US,en;q=0.5",
 }
 
-STATE_FILE = Path(__file__).with_name("state.json")
+def app_dir():
+    """Directory holding config/state: overridable, and next to the .exe when
+    packaged with PyInstaller (whose temp extraction dir is wiped every run)."""
+    if os.environ.get("STOCK_NOTIFIER_HOME"):
+        return Path(os.environ["STOCK_NOTIFIER_HOME"])
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).parent
+    return Path(__file__).parent
+
+
+STATE_FILE = app_dir() / "state.json"
 
 
 def log(msg):
@@ -166,11 +176,21 @@ def notify(config, product, status_note="", title="In stock!", body=None):
 
     if notifiers.get("desktop", False):
         try:
-            subprocess.run(
-                ["notify-send", "-u", "critical", title, body],
-                check=False,
-                timeout=10,
-            )
+            if sys.platform == "win32":
+                ps_title = title.replace("'", "''")
+                ps_body = body.replace("'", "''")
+                ps = (
+                    "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;"
+                    "$n=New-Object System.Windows.Forms.NotifyIcon;"
+                    "$n.Icon=[System.Drawing.SystemIcons]::Information;$n.Visible=$true;"
+                    f"$n.ShowBalloonTip(10000,'{ps_title}','{ps_body}',"
+                    "[System.Windows.Forms.ToolTipIcon]::Info);Start-Sleep 6"
+                )
+                subprocess.run(["powershell", "-NoProfile", "-Command", ps],
+                               check=False, timeout=20)
+            else:
+                subprocess.run(["notify-send", "-u", "critical", title, body],
+                               check=False, timeout=10)
             sent.append("desktop")
         except (OSError, subprocess.TimeoutExpired) as e:
             log(f"  desktop notification failed: {e}")
@@ -269,7 +289,7 @@ def run_checks(config, state):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("-c", "--config", default=str(Path(__file__).with_name("config.json")))
+    parser.add_argument("-c", "--config", default=str(app_dir() / "config.json"))
     parser.add_argument("--once", action="store_true", help="run one check and exit (for cron)")
     args = parser.parse_args()
 

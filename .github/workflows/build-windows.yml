@@ -1,0 +1,36 @@
+name: Build Windows app
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pyinstaller flask requests
+
+      - name: Build executable
+        run: >
+          pyinstaller --onefile --console --name CardStockNotifier
+          --add-data "templates;templates"
+          --add-data "config.json;."
+          desktop.py
+
+      - name: Publish release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete windows-app --cleanup-tag -y || true
+          gh release create windows-app dist/CardStockNotifier.exe \
+            --title "Windows app" \
+            --notes "Double-click CardStockNotifier.exe to run. First run walks you through setup. Windows SmartScreen may warn because the file is unsigned: click 'More info' then 'Run anyway'."

@@ -3,3 +3,6 @@ __pycache__/
 webstate.json
 server.log
 notifier.log
+build/
+dist/
+*.spec

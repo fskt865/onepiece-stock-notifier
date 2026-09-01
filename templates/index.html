@@ -35,7 +35,7 @@
   .card h2 { font-size: 15px; margin: 0 0 12px; }
   .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 3px; }
-  input[type=text], input[type=url], input[type=number] {
+  input[type=text], input[type=url], input[type=number], select {
     width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
     background: var(--bg); color: var(--text); font: inherit;
   }
@@ -57,6 +57,7 @@
   .pill.unknown { background: var(--amber-bg); color: var(--amber); }
   .pill.error { background: var(--red-bg); color: var(--red); }
   .pill.not_checked { background: var(--gray-bg); color: var(--muted); }
+  .pill.watching { background: var(--gray-bg); color: var(--accent); }
   .product { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--line); }
   .product:first-of-type { border-top: none; }
   .product .info { flex: 1; min-width: 0; }
@@ -147,22 +148,50 @@
 <dialog id="product-dialog">
   <h2 id="dialog-title">Add watch target</h2>
   <div class="field">
-    <label>Name</label>
-    <input type="text" id="p-name" placeholder="OP-09 Booster Box — Best Buy">
+    <label>Watch type</label>
+    <select id="p-type" onchange="typeChanged()">
+      <option value="stock">Restock — a specific product's page comes back in stock</option>
+      <option value="new_items">Launches — new listings appear on a store/category page</option>
+    </select>
   </div>
   <div class="field">
-    <label>Product page URL</label>
+    <label>Name</label>
+    <input type="text" id="p-name" placeholder="OP-09 Booster Box — TCGPlayer">
+  </div>
+  <div class="field">
+    <label id="url-label">Product page URL</label>
     <input type="url" id="p-url" placeholder="https://…">
   </div>
-  <div class="field">
-    <label>Out-of-stock phrases (comma-separated, checked first)</label>
-    <input type="text" id="p-out" placeholder="sold out, coming soon, out of stock">
-    <div class="hint">Open the page while it's sold out and copy the exact wording it shows.</div>
+  <div id="stock-fields">
+    <div class="field">
+      <label>Out-of-stock phrases (comma-separated, checked first)</label>
+      <input type="text" id="p-out" placeholder="sold out, coming soon, out of stock">
+      <div class="hint">Open the page while it's sold out and copy the exact wording it shows.</div>
+    </div>
+    <div class="field">
+      <label>In-stock phrases (comma-separated)</label>
+      <input type="text" id="p-in" placeholder="add to cart, in stock">
+      <div class="hint">Matching is case-insensitive. If neither list matches, status shows "unknown".</div>
+    </div>
   </div>
-  <div class="field">
-    <label>In-stock phrases (comma-separated)</label>
-    <input type="text" id="p-in" placeholder="add to cart, in stock">
-    <div class="hint">Matching is case-insensitive. If neither list matches, status shows "unknown".</div>
+  <div id="new-fields" hidden>
+    <div class="field">
+      <label>Link keywords (comma-separated — a link counts only if it contains ALL of them)</label>
+      <input type="text" id="p-kw" placeholder="/products/">
+      <div class="hint">The first check records what's already listed; you're pinged only when
+        something new appears after that.</div>
+    </div>
+    <details>
+      <summary class="hint">Advanced: custom item pattern (for JS-heavy sites)</summary>
+      <div class="field" style="margin-top:8px">
+        <label>Item regex (each match = one tracked item; overrides keywords)</label>
+        <input type="text" id="p-pattern" placeholder="N[0-9]{13}">
+      </div>
+      <div class="field">
+        <label>Item URL template ({0} = the match)</label>
+        <input type="text" id="p-tmpl" placeholder="https://…/{0}">
+      </div>
+    </details>
   </div>
   <div class="row" style="justify-content:flex-end">
     <button onclick="document.getElementById('product-dialog').close()">Cancel</button>
@@ -203,6 +232,7 @@ async function api(path, method = "GET", body = null) {
 const STATUS_LABELS = {
   in_stock: "In stock", out_of_stock: "Out of stock", unknown: "Unknown",
   error: "Fetch failed", not_checked: "Not checked yet",
+  watching: "Watching for launches",
 };
 
 function ago(ts) {
@@ -226,6 +256,7 @@ function render() {
           <div><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div>
           <div class="meta">
             ${p.last_checked ? "Checked " + ago(p.last_checked) : ""}
+            ${p.item_count ? " — tracking " + p.item_count + " listings" : ""}
             ${p.error ? " — " + esc(p.error) : ""}
             ${p.notified_at ? " — pinged " + ago(p.notified_at) : ""}
           </div>
@@ -284,23 +315,39 @@ async function saveSettings() {
   } catch (e) { toast("Error: " + e.message); }
 }
 
+function typeChanged() {
+  const isNew = $("p-type").value === "new_items";
+  $("stock-fields").hidden = isNew;
+  $("new-fields").hidden = !isNew;
+  $("url-label").textContent = isNew ? "Store / category page URL" : "Product page URL";
+}
+
 function openProductDialog(id = null) {
   editingId = id;
   const p = id ? latest.products.find(x => x.id === id) : null;
   $("dialog-title").textContent = p ? "Edit watch target" : "Add watch target";
+  $("p-type").value = p && p.type === "new_items" ? "new_items" : "stock";
   $("p-name").value = p ? p.name : "";
   $("p-url").value = p ? p.url : "";
-  $("p-out").value = p ? p.out_of_stock_text.join(", ") : "sold out, out of stock";
-  $("p-in").value = p ? p.in_stock_text.join(", ") : "add to cart";
+  $("p-out").value = p ? (p.out_of_stock_text || []).join(", ") : "sold out, out of stock";
+  $("p-in").value = p ? (p.in_stock_text || []).join(", ") : "add to cart";
+  $("p-kw").value = p ? (p.keywords || []).join(", ") : "/products/";
+  $("p-pattern").value = p ? (p.item_pattern || "") : "";
+  $("p-tmpl").value = p ? (p.item_url_template || "") : "";
+  typeChanged();
   $("product-dialog").showModal();
 }
 
 async function saveProduct() {
   const body = {
+    type: $("p-type").value === "new_items" ? "new_items" : undefined,
     name: $("p-name").value,
     url: $("p-url").value,
     out_of_stock_text: $("p-out").value,
     in_stock_text: $("p-in").value,
+    keywords: $("p-kw").value,
+    item_pattern: $("p-pattern").value,
+    item_url_template: $("p-tmpl").value,
   };
   try {
     if (editingId) await api(`/api/products/${editingId}`, "PUT", body);
