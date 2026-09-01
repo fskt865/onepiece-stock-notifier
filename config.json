@@ -59,12 +59,18 @@
       "id": "hottopic1"
     },
     {
-      "name": "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)",
+      "name": "Newegg - new One Piece card listings",
       "type": "new_items",
-      "url": "https://api.bestbuy.com/v1/products(search=one&search=piece&search=card&search=game)?apiKey={BESTBUY_API_KEY}&format=json&show=name,sku,url&pageSize=100",
-      "item_pattern": "\"url\":\"(https://www\\.bestbuy\\.com/site/[^\"]+)\"",
-      "item_url_template": "{0}",
-      "id": "bestbuy01"
+      "url": "https://www.newegg.com/p/pl?d=one+piece+card+game",
+      "keywords": ["newegg.com/p/", "one piece card"],
+      "id": "newegg001"
+    },
+    {
+      "name": "Macy's (Toys R Us) - new One Piece listings",
+      "type": "new_items",
+      "url": "https://www.macys.com/shop/featured/one-piece-card-game",
+      "keywords": ["/shop/product/", "one-piece"],
+      "id": "macys0001"
     }
   ],
   "paused": false

@@ -28,7 +28,6 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          BESTBUY_API_KEY: ${{ secrets.BESTBUY_API_KEY }}
         run: python stock_notifier.py --once
 
       - name: Persist state

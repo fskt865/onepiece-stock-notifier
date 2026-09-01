@@ -66,7 +66,9 @@ def check_product(product):
     return "unknown"
 
 
-LINK_RE = re.compile(r'<a\s[^>]*?href="([^"]+)"[^>]*>(.*?)</a>', re.I | re.S)
+LINK_RE = re.compile(r'<a\s([^>]*)>(.*?)</a>', re.I | re.S)
+HREF_RE = re.compile(r'href="([^"]+)"', re.I)
+TITLE_ATTR_RE = re.compile(r'title="([^"]*)"', re.I)
 SECRET_RE = re.compile(r"\{([A-Z][A-Z0-9_]*)\}")
 
 
@@ -104,11 +106,18 @@ def check_new_items(product):
 
     keywords = [k.lower() for k in product.get("keywords", []) if k.strip()]
     items = {}
-    for href, inner in LINK_RE.findall(resp.text):
-        url = urljoin(resp.url, html.unescape(href))
+    for attrs, inner in LINK_RE.findall(resp.text):
+        href = HREF_RE.search(attrs)
+        if not href:
+            continue
+        url = urljoin(resp.url, html.unescape(href.group(1)))
         url = url.split("#", 1)[0].split("?", 1)[0]
         text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", inner))).strip()
-        hay = (url + " " + text).lower()
+        if not text:
+            # Image-only links often carry the product name in a title attr.
+            t = TITLE_ATTR_RE.search(attrs)
+            text = html.unescape(t.group(1)).strip() if t else ""
+        hay = (url + " " + html.unescape(attrs) + " " + text).lower()
         if keywords and all(k in hay for k in keywords):
             if url not in items or (text and not items[url]):
                 items[url] = text
