@@ -71,6 +71,27 @@
       "url": "https://www.macys.com/shop/featured/one-piece-card-game",
       "keywords": ["/shop/product/", "one-piece"],
       "id": "macys0001"
+    },
+    {
+      "name": "LA Sports Cards (Burbank/Glendale) - new Pokemon listings",
+      "type": "new_items",
+      "url": "https://lasportscards.com/collections/pokemon?sort_by=created-descending",
+      "keywords": ["/products/"],
+      "id": "lapokemon"
+    },
+    {
+      "name": "Hot Topic - new Pokemon card listings",
+      "type": "new_items",
+      "url": "https://www.hottopic.com/search?q=pokemon+card+game",
+      "keywords": ["/product/", "pokemon", "card"],
+      "id": "htpokemon"
+    },
+    {
+      "name": "Newegg - new Pokemon TCG listings",
+      "type": "new_items",
+      "url": "https://www.newegg.com/p/pl?d=pokemon+trading+card+game",
+      "keywords": ["newegg.com/p/", "pokemon tcg"],
+      "id": "nepokemon"
     }
   ],
   "paused": false
