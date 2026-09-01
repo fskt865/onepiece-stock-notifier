@@ -98,10 +98,14 @@ def run_new_items_check(product, config):
         if error is not None:
             entry["status"] = "error"
         elif not items:
-            entry["status"] = "unknown"
-            if prev.get("status") not in ("unknown", None):
-                core.notify(config, product,
-                            "warning: no matching listings found - check the page/keywords")
+            if product.get("allow_empty"):
+                entry["seen"] = prev.get("seen") or []
+                entry["item_count"] = 0
+            else:
+                entry["status"] = "unknown"
+                if prev.get("status") not in ("unknown", None):
+                    core.notify(config, product,
+                                "warning: no matching listings found - check the page/keywords")
         else:
             seen = prev.get("seen")
             if seen is not None:
@@ -199,6 +203,8 @@ def product_from_request(body, product_id=None):
     if body.get("type") == "new_items":
         product = {"id": pid, "name": name, "type": "new_items", "url": url,
                    "keywords": parse_phrases(body.get("keywords", []))}
+        if body.get("allow_empty"):
+            product["allow_empty"] = True
         pattern = (body.get("item_pattern") or "").strip()
         if pattern:
             product["item_pattern"] = pattern
@@ -331,9 +337,10 @@ def api_check(product_id=None):
 @app.post("/api/test-notification")
 def api_test_notification():
     config = load_config()
+    # Link somewhere that works from a phone, not this machine's localhost.
     sent = core.notify(config, {
         "name": "Test notification - the stock notifier can reach you",
-        "url": request.host_url,
+        "url": "https://fskt865.github.io/onepiece-stock-notifier/",
     })
     if not sent:
         return jsonify({"error": "No notification channel worked. "

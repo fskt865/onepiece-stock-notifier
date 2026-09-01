@@ -20,7 +20,7 @@ jobs:
 
       - name: Build executable
         run: >
-          pyinstaller --onefile --console --name CardStockNotifier
+          pyinstaller --onefile --windowed --name CardStockNotifier
           --add-data "templates;templates"
           --add-data "config.json;."
           desktop.py

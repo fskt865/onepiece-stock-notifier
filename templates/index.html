@@ -176,10 +176,28 @@
   </div>
   <div id="new-fields" hidden>
     <div class="field">
+      <label>Store preset (optional — fills the fields below)</label>
+      <select id="p-preset" onchange="applyPreset()">
+        <option value="">— pick a store type —</option>
+        <option value="shopify">Card shop on Shopify (most local game stores)</option>
+        <option value="hottopic">Hot Topic search</option>
+        <option value="boxlunch">BoxLunch search</option>
+        <option value="newegg">Newegg search</option>
+        <option value="macys">Macy's search</option>
+      </select>
+      <div class="hint">Pick one, then replace the CAPITALIZED parts of the URL and keywords.</div>
+    </div>
+    <div class="field">
       <label>Link keywords (comma-separated — a link counts only if it contains ALL of them)</label>
       <input type="text" id="p-kw" placeholder="/products/">
       <div class="hint">The first check records what's already listed; you're pinged only when
         something new appears after that.</div>
+    </div>
+    <div class="field">
+      <label style="display:flex;align-items:center;gap:8px;margin:0">
+        <input type="checkbox" id="p-empty" style="width:auto">
+        It's OK if nothing matches yet — ping when the first item appears
+      </label>
     </div>
     <details>
       <summary class="hint">Advanced: custom item pattern (for JS-heavy sites)</summary>
@@ -322,6 +340,27 @@ function typeChanged() {
   $("url-label").textContent = isNew ? "Store / category page URL" : "Product page URL";
 }
 
+const PRESETS = {
+  shopify:  {kw: "/products/", empty: false,
+             url: "https://STORE.com/collections/COLLECTION?sort_by=created-descending"},
+  hottopic: {kw: "/product/, YOUR-TERM, card", empty: true,
+             url: "https://www.hottopic.com/search?q=YOUR+SEARCH"},
+  boxlunch: {kw: "/product/, YOUR-TERM, card", empty: true,
+             url: "https://www.boxlunch.com/search?q=YOUR+SEARCH"},
+  newegg:   {kw: "newegg.com/p/, YOUR TERM", empty: true,
+             url: "https://www.newegg.com/p/pl?d=YOUR+SEARCH"},
+  macys:    {kw: "/shop/product/, YOUR-TERM", empty: true,
+             url: "https://www.macys.com/shop/featured/YOUR-SEARCH"},
+};
+
+function applyPreset() {
+  const p = PRESETS[$("p-preset").value];
+  if (!p) return;
+  $("p-kw").value = p.kw;
+  $("p-empty").checked = p.empty;
+  if (!$("p-url").value.trim()) $("p-url").value = p.url;
+}
+
 function openProductDialog(id = null) {
   editingId = id;
   const p = id ? latest.products.find(x => x.id === id) : null;
@@ -334,6 +373,8 @@ function openProductDialog(id = null) {
   $("p-kw").value = p ? (p.keywords || []).join(", ") : "/products/";
   $("p-pattern").value = p ? (p.item_pattern || "") : "";
   $("p-tmpl").value = p ? (p.item_url_template || "") : "";
+  $("p-empty").checked = !!(p && p.allow_empty);
+  $("p-preset").value = "";
   typeChanged();
   $("product-dialog").showModal();
 }
@@ -346,6 +387,7 @@ async function saveProduct() {
     out_of_stock_text: $("p-out").value,
     in_stock_text: $("p-in").value,
     keywords: $("p-kw").value,
+    allow_empty: $("p-empty").checked,
     item_pattern: $("p-pattern").value,
     item_url_template: $("p-tmpl").value,
   };

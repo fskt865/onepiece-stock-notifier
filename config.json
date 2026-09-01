@@ -92,6 +92,22 @@
       "url": "https://www.newegg.com/p/pl?d=pokemon+trading+card+game",
       "keywords": ["newegg.com/p/", "pokemon tcg"],
       "id": "nepokemon"
+    },
+    {
+      "name": "BoxLunch - new One Piece card listings",
+      "type": "new_items",
+      "url": "https://www.boxlunch.com/search?q=one+piece+card+game",
+      "keywords": ["/product/", "one-piece", "card"],
+      "allow_empty": true,
+      "id": "blonepiec"
+    },
+    {
+      "name": "BoxLunch - new Pokemon card listings",
+      "type": "new_items",
+      "url": "https://www.boxlunch.com/search?q=pokemon+card",
+      "keywords": ["/product/", "pokemon", "card"],
+      "allow_empty": true,
+      "id": "blpokemon"
     }
   ],
   "paused": false

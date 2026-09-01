@@ -20,7 +20,7 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import urljoin
+from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
 import requests
 
@@ -76,6 +76,19 @@ def check_product(product):
     return "unknown"
 
 
+TRACKING_PARAMS = {"_pos", "_sid", "_ss", "ref", "intid", "cm_sp", "clickid"}
+
+
+def clean_url(url):
+    """Drop the fragment and known tracking params, keeping params some sites
+    genuinely need (e.g. Macy's ?ID=...)."""
+    parts = urlsplit(url)
+    query = urlencode([(k, v) for k, v in
+                       parse_qsl(parts.query, keep_blank_values=True)
+                       if k not in TRACKING_PARAMS and not k.startswith("utm_")])
+    return urlunsplit((parts.scheme, parts.netloc, parts.path, query, ""))
+
+
 LINK_RE = re.compile(r'<a\s([^>]*)>(.*?)</a>', re.I | re.S)
 HREF_RE = re.compile(r'href="([^"]+)"', re.I)
 TITLE_ATTR_RE = re.compile(r'title="([^"]*)"', re.I)
@@ -120,8 +133,7 @@ def check_new_items(product):
         href = HREF_RE.search(attrs)
         if not href:
             continue
-        url = urljoin(resp.url, html.unescape(href.group(1)))
-        url = url.split("#", 1)[0].split("?", 1)[0]
+        url = clean_url(urljoin(resp.url, html.unescape(href.group(1))))
         text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", inner))).strip()
         if not text:
             # Image-only links often carry the product name in a title attr.
@@ -209,6 +221,15 @@ def run_new_items_check(config, state, product, prev):
     now = time.time()
 
     if not items:
+        if product.get("allow_empty"):
+            # Nothing matches yet by design - baseline empty so the first
+            # matching item ever listed triggers a ping.
+            log(f"{name}: watching (0 listings)")
+            state[name] = {"status": "watching", "seen": prev.get("seen") or [],
+                           "item_count": 0, "checked_at": now,
+                           "notified_at": prev.get("notified_at", 0)}
+            save_state(state)
+            return
         log(f"{name}: unknown (no matching listings found)")
         if prev.get("status") != "unknown":
             notify(config, product,
