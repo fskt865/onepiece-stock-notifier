@@ -29,8 +29,7 @@ jobs:
         shell: bash
         run: |
           ./dist/CardStockNotifier.exe --selftest
-          echo "--- selftest log:"
-          cat dist/notifier.log
+          cat dist/notifier.log 2>/dev/null || true
 
       - name: Publish release
         shell: bash
