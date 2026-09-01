@@ -35,10 +35,11 @@
   .card h2 { font-size: 15px; margin: 0 0 12px; }
   .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 3px; }
-  input[type=text], input[type=url], input[type=number], select {
+  input[type=text], input[type=url], input[type=number], select, textarea {
     width: 100%; padding: 7px 9px; border: 1px solid var(--line); border-radius: 7px;
     background: var(--bg); color: var(--text); font: inherit;
   }
+  textarea { resize: vertical; }
   .field { flex: 1 1 180px; }
   .field.small { flex: 0 1 140px; }
   button {
@@ -90,6 +91,7 @@
   <header>
     <h1>🃏 Stock Notifier</h1>
     <span id="next-check"></span>
+    <button style="margin-left:auto" onclick="document.getElementById('feedback-dialog').showModal()">💬 Feedback</button>
   </header>
 
   <div class="card">
@@ -214,6 +216,26 @@
   <div class="row" style="justify-content:flex-end">
     <button onclick="document.getElementById('product-dialog').close()">Cancel</button>
     <button class="primary" onclick="saveProduct()">Save</button>
+  </div>
+</dialog>
+
+<dialog id="feedback-dialog">
+  <h2>Send feedback</h2>
+  <div class="field">
+    <label>Type</label>
+    <select id="fb-type">
+      <option>Bug report</option>
+      <option>Feature request</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>What happened, or what should it do?</label>
+    <textarea id="fb-text" rows="6" placeholder="The more detail the better — which store, which card, what you expected…"></textarea>
+  </div>
+  <div class="row" style="justify-content:flex-end">
+    <button onclick="document.getElementById('feedback-dialog').close()">Cancel</button>
+    <button onclick="fbIssue()">Open GitHub issue</button>
+    <button class="primary" onclick="fbEmail()">Email Noah</button>
   </div>
 </dialog>
 
@@ -424,6 +446,31 @@ async function testNotification() {
     const r = await api("/api/test-notification", "POST");
     toast("Test sent via: " + r.sent.join(", "));
   } catch (e) { toast(e.message); }
+}
+
+const FB_EMAIL = ["noahzpaskowitz", "gmail.com"].join("@");
+const FB_REPO = "fskt865/onepiece-stock-notifier";
+function fbBody() {
+  const text = $("fb-text").value.trim();
+  if (!text) { toast("Write something first"); return null; }
+  return text + "\n\n---\nSent from the desktop app";
+}
+function fbEmail() {
+  const body = fbBody();
+  if (body === null) return;
+  location.href = `mailto:${FB_EMAIL}?subject=` +
+    encodeURIComponent(`[Card Notifier] ${$("fb-type").value}`) +
+    `&body=${encodeURIComponent(body)}`;
+  $("feedback-dialog").close();
+  toast("Your email app should open with the message ready to send");
+}
+function fbIssue() {
+  const body = fbBody();
+  if (body === null) return;
+  window.open(`https://github.com/${FB_REPO}/issues/new?title=` +
+    encodeURIComponent(`[${$("fb-type").value}] `) +
+    `&body=${encodeURIComponent(body)}`, "_blank");
+  $("feedback-dialog").close();
 }
 
 refresh();

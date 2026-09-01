@@ -20,6 +20,7 @@ import threading
 import webbrowser
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
 
 import requests
 
@@ -30,6 +31,8 @@ PORT = 8080
 PANEL_URL = f"http://127.0.0.1:{PORT}"
 SITE_URL = "https://fskt865.github.io/onepiece-stock-notifier/"
 RAW_BASE = "https://raw.githubusercontent.com/fskt865/onepiece-stock-notifier/main"
+ISSUES_URL = "https://github.com/fskt865/onepiece-stock-notifier/issues/new"
+FEEDBACK_EMAIL = "@".join(("noahzpaskowitz", "gmail.com"))
 
 # A --windowed build has no stdout/stderr; keep the watcher's prints in a file.
 if sys.stdout is None or sys.stderr is None:
@@ -322,6 +325,67 @@ class SetupWizard(tk.Tk):
             self.render()
 
 
+class FeedbackDialog(tk.Toplevel):
+    """Bug report / feature request -> pre-filled email to Noah (or a
+    GitHub issue)."""
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Send feedback")
+        self.geometry("500x380")
+        self.transient(parent)
+
+        frame = ttk.Frame(self, padding=16)
+        frame.pack(fill="both", expand=True)
+        ttk.Label(frame, text="Found a bug? Want a new store or feature?",
+                  font=FONT_S).pack(anchor="w", pady=(0, 8))
+        self.kind = tk.StringVar(value="Bug report")
+        row = ttk.Frame(frame)
+        row.pack(anchor="w", pady=(0, 8))
+        ttk.Radiobutton(row, text="Bug report", variable=self.kind,
+                        value="Bug report").pack(side="left")
+        ttk.Radiobutton(row, text="Feature request", variable=self.kind,
+                        value="Feature request").pack(side="left", padx=12)
+        ttk.Label(frame, text="What happened, or what should it do?",
+                  font=FONT_B).pack(anchor="w")
+        self.text = tk.Text(frame, height=8, wrap="word", font=FONT_B)
+        self.text.pack(fill="both", expand=True, pady=(4, 10))
+        buttons = ttk.Frame(frame)
+        buttons.pack(fill="x")
+        ttk.Button(buttons, text="Cancel",
+                   command=self.destroy).pack(side="left")
+        ttk.Button(buttons, text="Open GitHub issue",
+                   command=self.send_issue).pack(side="right", padx=(6, 0))
+        ttk.Button(buttons, text="Email Noah",
+                   command=self.send_email).pack(side="right")
+
+    def message(self):
+        text = self.text.get("1.0", "end").strip()
+        if not text:
+            messagebox.showwarning("Feedback", "Write something first.",
+                                   parent=self)
+            return None
+        return text + "\n\n---\nSent from the desktop app"
+
+    def send_email(self):
+        body = self.message()
+        if body is None:
+            return
+        webbrowser.open(
+            f"mailto:{FEEDBACK_EMAIL}"
+            f"?subject={quote(f'[Card Notifier] {self.kind.get()}')}"
+            f"&body={quote(body)}")
+        self.destroy()
+
+    def send_issue(self):
+        body = self.message()
+        if body is None:
+            return
+        webbrowser.open(f"{ISSUES_URL}?title={quote(f'[{self.kind.get()}] ')}"
+                        f"&body={quote(body)}")
+        self.destroy()
+
+
 class StatusWindow(tk.Tk):
     """Shared frame: a summary line, a target list, and action buttons."""
 
@@ -349,10 +413,12 @@ class StatusWindow(tk.Tk):
 
         bottom = ttk.Frame(self, padding=(14, 0, 14, 10))
         bottom.pack(fill="x")
-        ttk.Label(bottom, text=note, font=FONT_B, wraplength=540,
+        ttk.Label(bottom, text=note, font=FONT_B, wraplength=440,
                   justify="left").pack(side="left")
         ttk.Button(bottom, text="Redo setup",
-                   command=self.redo_setup).pack(side="right")
+                   command=self.redo_setup).pack(side="right", padx=(6, 0))
+        ttk.Button(bottom, text="Feedback",
+                   command=lambda: FeedbackDialog(self)).pack(side="right")
 
     def redo_setup(self):
         if not messagebox.askyesno(
