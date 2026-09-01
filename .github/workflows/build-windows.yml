@@ -25,6 +25,13 @@ jobs:
           --add-data "config.json;."
           desktop.py
 
+      - name: Self-test the executable
+        shell: bash
+        run: |
+          ./dist/CardStockNotifier.exe --selftest
+          echo "--- selftest log:"
+          cat dist/notifier.log
+
       - name: Publish release
         shell: bash
         env:
@@ -33,4 +40,4 @@ jobs:
           gh release delete windows-app --cleanup-tag -y || true
           gh release create windows-app dist/CardStockNotifier.exe \
             --title "Windows app" \
-            --notes "Double-click CardStockNotifier.exe to run. First run walks you through setup. Windows SmartScreen may warn because the file is unsigned: click 'More info' then 'Run anyway'."
+            --notes "**Install:** download CardStockNotifier.exe below, put it in its own folder, and double-click it. Windows SmartScreen will warn because the file is unsigned - click **More info**, then **Run anyway**. A setup wizard walks you through the rest; pick **In the cloud** and your computer doesn't even need to stay on. To get pings on your phone, install the free **ntfy** app and subscribe to the team's topic name."

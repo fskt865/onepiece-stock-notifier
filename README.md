@@ -1,12 +1,41 @@
-# One Piece Card Stock Notifier
+# Card Stock Notifier
+
+Pings your phone the moment One Piece or Pokemon cards restock or a new
+product launches — at the official Bandai shops, LA-area card stores,
+Hot Topic, BoxLunch, Newegg, and Macy's out of the box, plus any store
+page you add.
+
+## 📥 Install (Windows) — 3 steps
+
+Nothing to build, no Python needed — the app comes ready to run.
+
+1. **[Download CardStockNotifier.exe](https://github.com/fskt865/onepiece-stock-notifier/releases/download/windows-app/CardStockNotifier.exe)**
+2. Put it in its **own folder** (it saves settings next to itself) and
+   double-click it. Windows SmartScreen will warn because the file is
+   unsigned — click **More info → Run anyway**.
+3. Follow the setup wizard on screen. Pick **"In the cloud"** (recommended):
+   GitHub's servers then do all the checking around the clock, **your
+   computer can be off**, and the app is just a status window.
+
+To get the pings: install the free **ntfy** app on your phone
+(App Store / Google Play), tap **+ Subscribe to topic**, and enter the
+team's topic name (the wizard explains this too).
+
+**No install needed at all** if you just want the web version: the control
+panel lives at **https://fskt865.github.io/onepiece-stock-notifier/** —
+status is visible to anyone; editing needs a one-time token (see below).
+
+---
+
+## How it works
 
 Watches product pages and sends a push notification the moment an item flips
-from out-of-stock to in-stock. Works for any retailer whose product page is
-plain HTML (TCGPlayer listings, the official One Piece card game shop, most
-LGS webstores, etc.).
+from out-of-stock to in-stock, or a new listing appears on a store's page.
+Works for any retailer whose pages are plain HTML (TCGPlayer listings, the
+official One Piece card game shop, most local game store webstores, etc.).
 
 Three ways to run it: **hosted on GitHub** (no server needed, recommended),
-a local **web GUI**, or a headless CLI.
+the desktop app / local **web GUI**, or a headless CLI.
 
 ## GitHub-hosted (serverless)
 
@@ -53,7 +82,13 @@ There are two watch types:
 
 ## Local alternatives
 
-## Setup
+## For developers (optional — users never need this)
+
+Everything below is for working on the code itself. The Windows app above is
+prebuilt by the `build-windows.yml` workflow, and the cloud watcher runs
+itself via `check.yml`.
+
+### Dev setup
 
 ```bash
 cd stock-notifier

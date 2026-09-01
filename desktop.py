@@ -287,10 +287,22 @@ class SetupWizard(tk.Tk):
         self.idx += 1
         self.render()
 
+    def save_config_file(self, config):
+        try:
+            CONFIG_FILE.write_text(json.dumps(config, indent=2))
+            return True
+        except OSError as e:
+            messagebox.showerror(
+                "Can't save here",
+                "Settings couldn't be saved next to the app "
+                f"({e}).\n\nMove the app into a normal folder you own - "
+                "like Documents or Desktop - and run it again.")
+            return False
+
     def finish(self):
         if self.mode.get() == "cloud":
-            CONFIG_FILE.write_text(json.dumps({"mode": "cloud"}, indent=2))
-            self.destroy()
+            if self.save_config_file({"mode": "cloud"}):
+                self.destroy()
             return
         config = self.build_config()
         if not (config["notifications"]["ntfy_topic"]
@@ -301,8 +313,8 @@ class SetupWizard(tk.Tk):
                     "No notification method is set, so nothing will ping you. "
                     "Save anyway?"):
                 return
-        CONFIG_FILE.write_text(json.dumps(config, indent=2))
-        self.destroy()
+        if self.save_config_file(config):
+            self.destroy()
 
     def back(self):
         if self.idx:
@@ -335,8 +347,24 @@ class StatusWindow(tk.Tk):
         self.tree.column("checked", width=90)
         self.tree.pack(fill="both", expand=True, padx=14, pady=(0, 6))
 
-        ttk.Label(self, text=note, font=FONT_B, wraplength=660,
-                  justify="left").pack(anchor="w", padx=14, pady=(0, 10))
+        bottom = ttk.Frame(self, padding=(14, 0, 14, 10))
+        bottom.pack(fill="x")
+        ttk.Label(bottom, text=note, font=FONT_B, wraplength=540,
+                  justify="left").pack(side="left")
+        ttk.Button(bottom, text="Redo setup",
+                   command=self.redo_setup).pack(side="right")
+
+    def redo_setup(self):
+        if not messagebox.askyesno(
+                "Redo setup", "Erase the saved settings and run the setup "
+                "wizard again the next time the app opens?"):
+            return
+        try:
+            CONFIG_FILE.unlink()
+        except OSError:
+            pass
+        messagebox.showinfo("Redo setup",
+                            "Done - close and reopen the app to set it up again.")
 
     def populate(self, rows, summary):
         self.tree.delete(*self.tree.get_children())
@@ -439,7 +467,35 @@ def port_in_use():
         probe.close()
 
 
+def selftest():
+    """Sanity checks that don't need a display - verifies a packaged build."""
+    print(f"app dir:          {core.app_dir()}")
+    targets = bundled_default_targets()
+    print(f"bundled targets:  {len(targets)}")
+    assert targets, "bundled config.json missing from the package"
+    import app as webapp
+    tmpl = Path(webapp.TEMPLATE_DIR) / "index.html"
+    print(f"template found:   {tmpl.exists()} ({tmpl})")
+    assert tmpl.exists(), "templates/index.html missing from the package"
+    with webapp.app.test_client() as client:
+        code = client.get("/").status_code
+        print(f"GET / renders:    HTTP {code}")
+        assert code == 200
+        code = client.get("/api/state").status_code
+        print(f"GET /api/state:   HTTP {code}")
+        assert code == 200
+    # HTTPS from inside the package (catches a missing certifi bundle).
+    code = requests.get("https://ntfy.sh/", timeout=20).status_code
+    print(f"HTTPS works:      HTTP {code}")
+    assert code == 200
+    print("selftest OK")
+
+
 def main():
+    if "--selftest" in sys.argv:
+        selftest()
+        return
+
     first_run = not CONFIG_FILE.exists()
     if first_run:
         wizard = SetupWizard()

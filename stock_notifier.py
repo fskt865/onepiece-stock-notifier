@@ -189,8 +189,9 @@ def notify(config, product, status_note="", title="In stock!", body=None):
     if notifiers.get("desktop", False):
         try:
             if sys.platform == "win32":
+                # Balloon tips choke on newlines inside -Command one-liners.
                 ps_title = title.replace("'", "''")
-                ps_body = body.replace("'", "''")
+                ps_body = body.replace("'", "''").replace("\r", "").replace("\n", " | ")
                 ps = (
                     "Add-Type -AssemblyName System.Windows.Forms,System.Drawing;"
                     "$n=New-Object System.Windows.Forms.NotifyIcon;"
