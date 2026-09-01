@@ -16,7 +16,7 @@
       "https://en.onepiece-cardgame.com/products/sleeve044.html"
     ],
     "item_count": 12,
-    "checked_at": 1788221475.938686,
+    "checked_at": 1788221645.7431834,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -44,7 +44,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1788221476.7310057,
+    "checked_at": 1788221646.2895608,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -57,7 +57,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1788221477.2504337,
+    "checked_at": 1788221646.7325563,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -70,7 +70,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788221477.615953,
+    "checked_at": 1788221647.0958247,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -83,7 +83,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788221478.345197,
+    "checked_at": 1788221647.3021889,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -94,7 +94,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 3,
-    "checked_at": 1788221478.9453216,
+    "checked_at": 1788221647.7960567,
     "notified_at": 0
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -109,7 +109,7 @@
       "https://www.newegg.com/p/3GP-0005-00071"
     ],
     "item_count": 2,
-    "checked_at": 1788221479.7836084,
+    "checked_at": 1788221647.893564,
     "notified_at": 0
   },
   "Macy's (Toys R Us) - new One Piece listings": {
@@ -118,7 +118,88 @@
       "https://www.macys.com/shop/product/bandai-ensky-pt-l13x-one-piece-wanokokokuni-paper-theater-large"
     ],
     "item_count": 1,
-    "checked_at": 1788221480.6725647,
+    "checked_at": 1788221648.9925387,
+    "notified_at": 0
+  },
+  "LA Sports Cards (Burbank/Glendale) - new Pokemon listings": {
+    "status": "watching",
+    "seen": [
+      "https://lasportscards.com/products/battle-region-booster-box",
+      "https://lasportscards.com/products/chaos-rising-booster-box",
+      "https://lasportscards.com/products/crimson-haze-booster-pack",
+      "https://lasportscards.com/products/cynthias-garchomp-ex-premium-collection",
+      "https://lasportscards.com/products/first-partner-illustration-collection-series-2-first-partner-collection-2026",
+      "https://lasportscards.com/products/league-battle-deck-mega-lucario-ex",
+      "https://lasportscards.com/products/mega-charizard-x-ex-ultra-premium-collection",
+      "https://lasportscards.com/products/nihil-zero-booster-box",
+      "https://lasportscards.com/products/pokemon-abyss-eye-booster-box-m5",
+      "https://lasportscards.com/products/pokemon-abyss-eye-booster-pack-m5",
+      "https://lasportscards.com/products/pokemon-ascended-heroes-mega-emboar-ex-box",
+      "https://lasportscards.com/products/pokemon-ascended-heroes-mega-feraligatr-ex-box",
+      "https://lasportscards.com/products/pokemon-ascended-heroes-mega-meganium-ex-box",
+      "https://lasportscards.com/products/pokemon-ascended-heroes-tin-me02-5",
+      "https://lasportscards.com/products/pokemon-battle-region-chinese-pack",
+      "https://lasportscards.com/products/pokemon-chaos-rising-3-pack-blister-charmeleon",
+      "https://lasportscards.com/products/pokemon-chaos-rising-booster-bundle-me04",
+      "https://lasportscards.com/products/pokemon-chaos-rising-booster-pack-me04",
+      "https://lasportscards.com/products/pokemon-chaos-rising-build-battle-box",
+      "https://lasportscards.com/products/pokemon-chaos-rising-elite-trainer-box-me04",
+      "https://lasportscards.com/products/pokemon-chaos-rising-sleeved-booster-pack",
+      "https://lasportscards.com/products/pokemon-charizard-ex-super-premium-collection",
+      "https://lasportscards.com/products/pokemon-chinese-ninja-spinner-pack",
+      "https://lasportscards.com/products/pokemon-delta-reign-booster-box-me06",
+      "https://lasportscards.com/products/pokemon-delta-reign-booster-pack-me06",
+      "https://lasportscards.com/products/pokemon-ex-power-trio-tin-blastoise-ex-xy-furious-fists",
+      "https://lasportscards.com/products/pokemon-first-partner-illustration-collection-series-3",
+      "https://lasportscards.com/products/pokemon-hidden-fates-tin-charizard-gx-hidden-fates-hif",
+      "https://lasportscards.com/products/pokemon-japanese-battle-partners-deck-build-box",
+      "https://lasportscards.com/products/pokemon-japanese-future-flash-booster-box",
+      "https://lasportscards.com/products/pokemon-league-battle-deck-reshiram-charizard-gx",
+      "https://lasportscards.com/products/pokemon-lumiose-city-mini-tin",
+      "https://lasportscards.com/products/pokemon-mega-greninja-ex-premium-collection-box",
+      "https://lasportscards.com/products/pokemon-mega-moonlit-tin-mega-clefable-ex",
+      "https://lasportscards.com/products/pokemon-mega-ninja-spinner-m4f-chinese",
+      "https://lasportscards.com/products/pokemon-mega-zygarde-ex-premium-collection",
+      "https://lasportscards.com/products/pokemon-orbeetle-v-box",
+      "https://lasportscards.com/products/pokemon-pikachu-zekrom-gx-premium-collection",
+      "https://lasportscards.com/products/pokemon-pitch-black-3-pack-blister-binacle-me05",
+      "https://lasportscards.com/products/pokemon-pitch-black-booster-box-me05",
+      "https://lasportscards.com/products/pokemon-pitch-black-booster-bundle-me05",
+      "https://lasportscards.com/products/pokemon-pitch-black-booster-pack-me05",
+      "https://lasportscards.com/products/pokemon-pitch-black-build-battle-box-me05",
+      "https://lasportscards.com/products/pokemon-pitch-black-elite-trainer-box-me05",
+      "https://lasportscards.com/products/pokemon-pitch-black-sleeved-booster-pack-me05",
+      "https://lasportscards.com/products/pokemon-shining-fates-premium-collection-shiny-crobat",
+      "https://lasportscards.com/products/pokemon-team-rocket-tin-team-rockets-mewtwo-ex",
+      "https://lasportscards.com/products/prismatic-evolutions-poster-collection-sv-prismatic-evolutions",
+      "https://lasportscards.com/products/snow-hazard-booster-box",
+      "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
+    ],
+    "item_count": 50,
+    "checked_at": 1788221649.8501453,
+    "notified_at": 0
+  },
+  "Hot Topic - new Pokemon card listings": {
+    "status": "watching",
+    "seen": [
+      "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
+    ],
+    "item_count": 1,
+    "checked_at": 1788221650.2322893,
+    "notified_at": 0
+  },
+  "Newegg - new Pokemon TCG listings": {
+    "status": "watching",
+    "seen": [
+      "https://www.newegg.com/p/01M-0047-004A6",
+      "https://www.newegg.com/p/01N-0343-00067",
+      "https://www.newegg.com/p/3GP-0001-00033",
+      "https://www.newegg.com/p/3GP-0001-000Y7",
+      "https://www.newegg.com/p/3GP-0006-00017",
+      "https://www.newegg.com/p/3GP-0006-00018"
+    ],
+    "item_count": 6,
+    "checked_at": 1788221651.0508673,
     "notified_at": 0
   }
 }
