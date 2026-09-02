@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get set up - Card Stock Notifier</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1c2230; --muted: #6b7280;
+    --line: #e3e6ec; --accent: #2563eb; --accent-text: #ffffff;
+    --green: #157f3d; --green-bg: #e5f6ec; --red: #b3261e; --red-bg: #fbeae9;
+    --amber: #92600a; --amber-bg: #fdf3dd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171d; --card: #1d2129; --text: #e8eaf0; --muted: #99a1af;
+      --line: #2c313b; --accent: #5b8bf5; --accent-text: #0e1116;
+      --green: #5ad189; --green-bg: #16301f; --red: #f0857d; --red-bg: #35201e;
+      --amber: #e5b567; --amber-bg: #322817;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 17px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  .lead { color: var(--muted); margin: 0 0 22px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+          padding: 18px; margin-bottom: 14px; }
+  .step h2 { font-size: 17px; margin: 0 0 8px; display: flex; align-items: center; gap: 10px; }
+  .num { display: inline-flex; width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+         background: var(--accent); color: var(--accent-text); align-items: center;
+         justify-content: center; font-size: 15px; font-weight: 700; }
+  p { margin: 8px 0; }
+  .btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+  a.btn, button.btn { display: inline-block; padding: 11px 16px; border-radius: 9px;
+    border: 1px solid var(--line); background: var(--card); color: var(--text);
+    font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .topic { display: flex; gap: 8px; align-items: stretch; margin: 10px 0; }
+  .topic input { flex: 1; min-width: 0; padding: 11px 12px; border: 1px solid var(--line);
+    border-radius: 9px; background: var(--bg); color: var(--text);
+    font: 20px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .5px; }
+  .topic button { padding: 0 14px; }
+  .note { font-size: 14px; color: var(--muted); }
+  .result { margin-top: 12px; padding: 10px 12px; border-radius: 9px; font-size: 15px; display: none; }
+  .result.ok { display: block; background: var(--green-bg); color: var(--green); }
+  .result.bad { display: block; background: var(--red-bg); color: var(--red); }
+  .result.wait { display: block; background: var(--amber-bg); color: var(--amber); }
+  ol { padding-left: 22px; margin: 6px 0; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+  .warn { background: var(--amber-bg); color: var(--amber); border-radius: 9px; padding: 10px 12px;
+          font-size: 15px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🃏 Card restock pings on your phone</h1>
+  <p class="lead">Three steps, about two minutes. Nothing to download on your computer.</p>
+
+  <div class="step">
+    <h2><span class="num">1</span> Install the free ntfy app</h2>
+    <p>It's the app that delivers the pings (say "notify").</p>
+    <div class="btns">
+      <a class="btn" href="https://apps.apple.com/us/app/ntfy/id1625396347" target="_blank" rel="noopener">iPhone - App Store</a>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=io.heckel.ntfy" target="_blank" rel="noopener">Android - Google Play</a>
+    </div>
+    <p class="note">On an iPhone, allow notifications when the app asks. If you'd rather use a computer,
+      <a href="https://ntfy.sh/app" target="_blank" rel="noopener">ntfy.sh/app</a> works in a browser too.</p>
+  </div>
+
+  <div class="step">
+    <h2><span class="num">2</span> Subscribe to the team's topic</h2>
+    <p>Open ntfy, tap the <b>+</b> button (<i>Subscribe to topic</i>), and type this name exactly:</p>
+    <div class="topic">
+      <input id="topic" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="topic name from Noah">
+      <button class="btn" onclick="copyTopic()">Copy</button>
+    </div>
+    <p class="note" id="topic-note">Lowercase, no spaces. Leave the server as the default (ntfy.sh).</p>
+    <div class="warn" id="no-topic" hidden>This link didn't include a topic name. Ask Noah for it and type it in the box above.</div>
+  </div>
+
+  <div class="step">
+    <h2><span class="num">3</span> Test it</h2>
+    <p>Once you're subscribed, tap this and your phone should buzz within a few seconds.</p>
+    <div class="btns">
+      <button class="btn primary" id="test-btn" onclick="sendTest()">Send a test ping to my phone</button>
+    </div>
+    <div class="result" id="result"></div>
+    <p class="note">No buzz? Check that the topic in the ntfy app matches the box above letter for letter,
+      and that notifications are allowed for ntfy in your phone's settings.</p>
+  </div>
+
+  <div class="step">
+    <h2>That's it - what happens now</h2>
+    <p>A robot in the cloud checks the card shops around the clock and pings you the moment a new
+      One Piece or Pokemon listing shows up (official Bandai, Premium Bandai, LA Sports Cards,
+      Hot Topic, BoxLunch, Newegg, Macy's). Your phone and computer can be off; the ping still arrives.</p>
+    <p>Restocks sell out fast, so treat a ping as "go buy it now". You'll get one ping per new item, not
+      a ping every check.</p>
+    <p>Want to see what's being watched and when it was last checked?
+      <a href="index.html">Open the status page</a>. Viewing needs no login.</p>
+    <p class="note">Nothing new has launched yet since the watcher started, so it's normal to have received
+      no pings so far. The test button above is how you confirm the pipe works.</p>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const SITE = location.origin + location.pathname.replace(/start\.html$/, "");
+
+function cleanTopic(v) { return (v || "").trim().toLowerCase().replace(/\s+/g, ""); }
+
+function initTopic() {
+  const fromLink = cleanTopic(new URLSearchParams(location.search).get("topic"));
+  let saved = "";
+  try { saved = localStorage.getItem("ntfy_topic") || ""; } catch {}
+  const t = fromLink || saved;
+  $("topic").value = t;
+  $("no-topic").hidden = !!t;
+  if (fromLink) { try { localStorage.setItem("ntfy_topic", fromLink); } catch {} }
+}
+
+$("topic").addEventListener("input", () => {
+  const t = cleanTopic($("topic").value);
+  $("no-topic").hidden = !!t;
+  try { localStorage.setItem("ntfy_topic", t); } catch {}
+});
+
+async function copyTopic() {
+  const t = cleanTopic($("topic").value);
+  if (!t) return show("bad", "Nothing to copy yet.");
+  try { await navigator.clipboard.writeText(t); show("ok", "Copied. Now paste it into the ntfy app."); }
+  catch { $("topic").select(); show("wait", "Select the text and copy it by hand."); }
+}
+
+function show(kind, msg) {
+  const r = $("result");
+  r.className = "result " + kind;
+  r.textContent = msg;
+}
+
+async function sendTest() {
+  const t = cleanTopic($("topic").value);
+  if (!t) return show("bad", "Type the topic name first.");
+  $("test-btn").disabled = true;
+  show("wait", "Sending...");
+  try {
+    const resp = await fetch("https://ntfy.sh/" + encodeURIComponent(t), {
+      method: "POST",
+      headers: {"Title": "Test - the card notifier can reach you",
+                "Priority": "high", "Tags": "white_check_mark",
+                "Click": SITE + "index.html"},
+      body: "If you can read this, you're all set. Real pings will look like this.",
+    });
+    if (!resp.ok) throw new Error("ntfy replied " + resp.status);
+    show("ok", "Sent. Your phone should buzz in a few seconds. If it did, you're done.");
+  } catch (e) {
+    show("bad", "Couldn't send (" + e.message + "). Check your internet connection and try again.");
+  } finally {
+    $("test-btn").disabled = false;
+  }
+}
+
+initTopic();
+</script>
+</body>
+</html>

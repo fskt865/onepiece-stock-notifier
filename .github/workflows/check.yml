@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "*/10 * * * *"   # GitHub may delay these; expect 10-20 min in practice
   workflow_dispatch:          # lets the web GUI trigger "check now"
+    inputs:
+      test_ping:
+        description: "Send a test notification to the NTFY_TOPIC secret instead of checking stock"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -24,13 +29,29 @@ jobs:
 
       - run: pip install requests
 
+      - name: Send test ping
+        if: ${{ inputs.test_ping == true || inputs.test_ping == 'true' }}
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          if [ -z "$NTFY_TOPIC" ]; then echo "NTFY_TOPIC secret is not set"; exit 1; fi
+          curl -sS -f -o /dev/null \
+            -H "Title: Test - the cloud watcher can reach you" \
+            -H "Priority: high" -H "Tags: white_check_mark,cloud" \
+            -H "Click: https://fskt865.github.io/onepiece-stock-notifier/" \
+            -d "This came from GitHub's servers, so real restock pings will arrive the same way." \
+            "https://ntfy.sh/$NTFY_TOPIC"
+          echo "test ping sent"
+
       - name: Run stock check
+        if: ${{ !(inputs.test_ping == true || inputs.test_ping == 'true') }}
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: python stock_notifier.py --once
 
       - name: Persist state
+        if: ${{ !(inputs.test_ping == true || inputs.test_ping == 'true') }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

@@ -5,25 +5,44 @@ product launches — at the official Bandai shops, LA-area card stores,
 Hot Topic, BoxLunch, Newegg, and Macy's out of the box, plus any store
 page you add.
 
-## 📥 Install (Windows) — 3 steps
+## 📱 Get pings on your phone — 3 steps, nothing to download on a computer
 
-Nothing to build, no Python needed — the app comes ready to run.
+The watcher already runs in the cloud, around the clock. All you need is the
+phone app and the team's topic name.
+
+1. Install the free **ntfy** app
+   ([iPhone](https://apps.apple.com/us/app/ntfy/id1625396347) /
+   [Android](https://play.google.com/store/apps/details?id=io.heckel.ntfy)).
+2. In ntfy, tap **+ Subscribe to topic** and type the team's topic name
+   exactly (ask Noah for it).
+3. Open **https://fskt865.github.io/onepiece-stock-notifier/start.html**,
+   type the same topic name, and tap **Send a test ping to my phone**.
+   If your phone buzzes, you're done.
+
+Noah can text a link that already fills in the topic:
+`https://fskt865.github.io/onepiece-stock-notifier/start.html?topic=<the-topic>`.
+
+Live status (what's watched, when it was last checked) is at
+**https://fskt865.github.io/onepiece-stock-notifier/** — viewing needs no
+login. Editing needs a one-time token (see "GitHub-hosted" below).
+
+**Important:** the schedule is set to every 10 minutes, but GitHub delays
+scheduled jobs heavily — in practice checks have been landing **2–5 hours
+apart**. A ping means "go now", and a restock that appears and sells out
+between checks will be missed.
+
+### Optional: the Windows status app
+
+Only useful if you want a desktop status window. It does not do any watching
+in cloud mode.
 
 1. **[Download CardStockNotifier.exe](https://github.com/fskt865/onepiece-stock-notifier/releases/download/windows-app/CardStockNotifier.exe)**
 2. Put it in its **own folder** (it saves settings next to itself) and
    double-click it. Windows SmartScreen will warn because the file is
    unsigned — click **More info → Run anyway**.
-3. Follow the setup wizard on screen. Pick **"In the cloud"** (recommended):
-   GitHub's servers then do all the checking around the clock, **your
-   computer can be off**, and the app is just a status window.
-
-To get the pings: install the free **ntfy** app on your phone
-(App Store / Google Play), tap **+ Subscribe to topic**, and enter the
-team's topic name (the wizard explains this too).
-
-**No install needed at all** if you just want the web version: the control
-panel lives at **https://fskt865.github.io/onepiece-stock-notifier/** —
-status is visible to anyone; editing needs a one-time token (see below).
+3. In the wizard pick **"In the cloud"**. Choosing **"On this computer"**
+   instead runs a second, independent watcher that only works while the app
+   is open — and if it uses the same topic you'll get every ping twice.
 
 ---
 
@@ -40,8 +59,11 @@ the desktop app / local **web GUI**, or a headless CLI.
 ## GitHub-hosted (serverless)
 
 A GitHub Actions workflow (`.github/workflows/check.yml`) runs the checker
-about every 10–20 minutes (GitHub delays scheduled jobs) and a GitHub Pages
-site gives a GUI usable from any device to see status and edit watch targets.
+on a `*/10` cron schedule (GitHub delays scheduled jobs; observed cadence is
+2–5 hours) and a GitHub Pages site gives a GUI usable from any device to see
+status and edit watch targets. Dispatching the workflow with the `test_ping`
+input sends a test notification to the `NTFY_TOPIC` secret without checking
+stock — the site's "Send a test ping through the cloud" button does this.
 
 One-time setup for whoever will use it:
 

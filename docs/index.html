@@ -84,8 +84,32 @@
     <button style="margin-left:auto" onclick="document.getElementById('feedback-dialog').showModal()">💬 Feedback</button>
   </header>
 
+  <div class="card" id="start-card">
+    <h2 style="margin-bottom:6px">New here? Get pings on your phone</h2>
+    <p style="margin:0 0 10px">Install the free ntfy app, subscribe to the team's topic, send yourself a
+      test ping. Two minutes, nothing to download on a computer. This page is only for
+      <i>seeing</i> what's watched and (for editors) changing it.</p>
+    <a class="primary" href="start.html" style="display:inline-block;padding:7px 14px;border-radius:7px;
+       background:var(--accent);color:var(--accent-text);text-decoration:none;font-weight:600">Open the setup steps</a>
+  </div>
+
+  <div class="card">
+    <div class="row" style="justify-content: space-between;">
+      <h2 style="margin:0">Watch targets</h2>
+      <div class="row">
+        <button id="btn-refresh" onclick="load(true)">Refresh</button>
+        <button id="btn-run" onclick="runNow()">Run check now</button>
+        <button class="primary" id="btn-add" onclick="openProductDialog()">+ Add target</button>
+      </div>
+    </div>
+    <div id="products" class="empty">Loading…</div>
+    <p class="hint">Checks run on a GitHub Actions schedule. It's set to every 10 minutes, but GitHub
+       often delays scheduled jobs by hours, so "Checked" times above are the real cadence.
+       Notifications go to the ntfy topic / Discord webhook set as repository secrets.</p>
+  </div>
+
   <div class="card" id="token-card">
-    <h2>Editing access</h2>
+    <h2>For editors: editing access</h2>
     <p id="token-status" class="hint" style="margin-top:0"></p>
     <details id="token-details">
       <summary>Set up / change GitHub token</summary>
@@ -102,20 +126,10 @@
         <button onclick="clearToken()">Forget</button>
       </div>
     </details>
-  </div>
-
-  <div class="card">
-    <div class="row" style="justify-content: space-between;">
-      <h2 style="margin:0">Watch targets</h2>
-      <div class="row">
-        <button id="btn-refresh" onclick="load(true)">Refresh</button>
-        <button id="btn-run" onclick="runNow()">Run check now</button>
-        <button class="primary" id="btn-add" onclick="openProductDialog()">+ Add target</button>
-      </div>
+    <div class="row" style="margin-top:12px">
+      <button id="btn-cloud-test" onclick="cloudTestPing()">Send a test ping through the cloud</button>
+      <span class="hint">Uses the real NTFY_TOPIC secret, so it proves the whole pipe end to end. Needs a token.</span>
     </div>
-    <div id="products" class="empty">Loading…</div>
-    <p class="hint">Checks run automatically about every 10–20 minutes via GitHub Actions.
-       Notifications go to the ntfy topic / Discord webhook set as repository secrets.</p>
   </div>
 
   <div class="card">
@@ -334,8 +348,7 @@ function render() {
   $("token-status").textContent = hasToken
     ? "Token saved in this browser — editing enabled."
     : "View-only: no token set. Open below to enable editing.";
-  $("token-details").open = !hasToken;
-  ["btn-run", "btn-add"].forEach(id => $(id).disabled = !hasToken);
+  ["btn-run", "btn-add", "btn-cloud-test"].forEach(id => $(id).disabled = !hasToken);
 }
 
 async function load(showToast = false) {
@@ -459,16 +472,24 @@ async function saveOptions() {
   catch (e) { toast(e.message); }
 }
 
-async function runNow() {
+async function dispatch(inputs, okMsg) {
   try {
     const resp = await fetch(`${API}/actions/workflows/${WORKFLOW}/dispatches`, {
-      method: "POST", headers: headers(true), body: JSON.stringify({ref: "main"}),
+      method: "POST", headers: headers(true),
+      body: JSON.stringify({ref: "main", inputs}),
     });
-    if (resp.status === 204) toast("Check started — results in a minute or two, then Refresh");
+    if (resp.status === 204) toast(okMsg);
     else if (resp.status === 401 || resp.status === 403 || resp.status === 404)
       toast("Not authorized — token needs Actions: Read and write on this repo.");
     else toast(`GitHub API ${resp.status}`);
   } catch (e) { toast(e.message); }
+}
+function runNow() {
+  return dispatch({}, "Check started — results in a minute or two, then Refresh");
+}
+function cloudTestPing() {
+  return dispatch({test_ping: "true"},
+    "Test ping queued — phones subscribed to the team topic should buzz within a minute or two");
 }
 
 const FB_EMAIL = ["noahzpaskowitz", "gmail.com"].join("@");
