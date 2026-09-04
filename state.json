@@ -20,7 +20,7 @@
       "https://en.onepiece-cardgame.com/products/sleeve046.html"
     ],
     "item_count": 12,
-    "checked_at": 1788531478.0013897,
+    "checked_at": 1788543487.7876956,
     "notified_at": 1788516542.878059
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -48,7 +48,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1788531478.7291837,
+    "checked_at": 1788543488.346899,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -61,7 +61,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1788531479.1962066,
+    "checked_at": 1788543489.082518,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -74,7 +74,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788531479.8883297,
+    "checked_at": 1788543489.3186922,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -87,19 +87,20 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788531480.6995652,
+    "checked_at": 1788543489.499279,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
     "status": "watching",
     "seen": [
+      "https://www.hottopic.com/product/kabao-one-piece-trading-card-pack/36555625.html",
       "https://www.hottopic.com/product/one-piece-card-game-cardquest-mystery-pack/36390869.html",
       "https://www.hottopic.com/product/one-piece-top-trumps-quiz-card-game/36447339.html",
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
-    "item_count": 3,
-    "checked_at": 1788531481.6835585,
-    "notified_at": 0
+    "item_count": 4,
+    "checked_at": 1788543490.3786435,
+    "notified_at": 1788543490.3786435
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
     "status": "missing_secret",
@@ -112,7 +113,7 @@
       "https://www.newegg.com/p/3GP-0005-00070",
       "https://www.newegg.com/p/3GP-0005-00071"
     ],
-    "checked_at": 1788531482.6179514,
+    "checked_at": 1788543491.5054424,
     "notified_at": 0
   },
   "Macy's (Toys R Us) - new One Piece listings": {
@@ -178,7 +179,7 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1788531483.6829023,
+    "checked_at": 1788543492.1371577,
     "notified_at": 0
   },
   "Hot Topic - new Pokemon card listings": {
@@ -187,7 +188,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 1,
-    "checked_at": 1788531484.4487133,
+    "checked_at": 1788543493.1166804,
     "notified_at": 0
   },
   "Newegg - new Pokemon TCG listings": {
@@ -201,14 +202,14 @@
       "https://www.newegg.com/p/3GP-0006-00018"
     ],
     "item_count": 6,
-    "checked_at": 1788531485.258658,
+    "checked_at": 1788543494.153316,
     "notified_at": 0
   },
   "BoxLunch - new One Piece card listings": {
     "status": "watching",
     "seen": [],
     "item_count": 0,
-    "checked_at": 1788531486.5828476,
+    "checked_at": 1788543495.3082497,
     "notified_at": 0
   },
   "BoxLunch - new Pokemon card listings": {
@@ -217,7 +218,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-mega-evolution-pitch-black-booster-pack/36953172.html"
     ],
     "item_count": 1,
-    "checked_at": 1788531487.5213664,
+    "checked_at": 1788543495.8264692,
     "notified_at": 0
   }
 }
