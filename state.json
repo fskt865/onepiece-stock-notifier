@@ -20,7 +20,7 @@
       "https://en.onepiece-cardgame.com/products/sleeve046.html"
     ],
     "item_count": 12,
-    "checked_at": 1788874707.3519483,
+    "checked_at": 1788888413.2377079,
     "notified_at": 1788516542.878059
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -48,7 +48,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1788874708.100933,
+    "checked_at": 1788888413.7926047,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -61,7 +61,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1788874708.5460987,
+    "checked_at": 1788888414.2755418,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -74,7 +74,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788874709.2552125,
+    "checked_at": 1788888414.5307155,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -87,7 +87,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788874710.174546,
+    "checked_at": 1788888414.8115647,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -95,13 +95,14 @@
     "seen": [
       "https://www.hottopic.com/product/kabao-one-piece-trading-card-pack/36555625.html",
       "https://www.hottopic.com/product/one-piece-card-game-cardquest-mystery-pack/36390869.html",
+      "https://www.hottopic.com/product/one-piece-card-game-the-worlds-strongest-warriors-booster-pack/36390879.html",
       "https://www.hottopic.com/product/one-piece-cardquest-bonus-quest-mystery-booster-pack/36904397.html",
       "https://www.hottopic.com/product/one-piece-top-trumps-quiz-card-game/36447339.html",
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
-    "item_count": 5,
-    "checked_at": 1788874711.3940322,
-    "notified_at": 1788612679.3614867
+    "item_count": 6,
+    "checked_at": 1788888415.4121592,
+    "notified_at": 1788888415.4121592
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
     "status": "missing_secret",
@@ -115,7 +116,7 @@
       "https://www.newegg.com/p/3GP-0005-00071"
     ],
     "item_count": 1,
-    "checked_at": 1788874712.3354034,
+    "checked_at": 1788888416.6059165,
     "notified_at": 0
   },
   "Macy's (Toys R Us) - new One Piece listings": {
@@ -181,7 +182,7 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1788874713.3984668,
+    "checked_at": 1788888417.211079,
     "notified_at": 0
   },
   "Hot Topic - new Pokemon card listings": {
@@ -191,7 +192,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 2,
-    "checked_at": 1788874713.8354795,
+    "checked_at": 1788888417.6744332,
     "notified_at": 1788612682.0300336
   },
   "Newegg - new Pokemon TCG listings": {
@@ -205,7 +206,7 @@
       "https://www.newegg.com/p/3GP-0006-00018"
     ],
     "item_count": 6,
-    "checked_at": 1788874714.6092598,
+    "checked_at": 1788888418.6449568,
     "notified_at": 0
   },
   "BoxLunch - new One Piece card listings": {
@@ -214,7 +215,7 @@
       "https://www.boxlunch.com/product/bandai-namco-one-piece-card-game-the-worlds-strongest-warrior-booster-pack/36426029.html"
     ],
     "item_count": 1,
-    "checked_at": 1788874715.8321178,
+    "checked_at": 1788888419.855718,
     "notified_at": 1788827140.5576997
   },
   "BoxLunch - new Pokemon card listings": {
@@ -223,7 +224,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-mega-evolution-pitch-black-booster-pack/36953172.html"
     ],
     "item_count": 0,
-    "checked_at": 1788874716.9209552,
+    "checked_at": 1788888420.7840087,
     "notified_at": 0
   }
 }
