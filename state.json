@@ -20,7 +20,7 @@
       "https://en.onepiece-cardgame.com/products/sleeve046.html"
     ],
     "item_count": 12,
-    "checked_at": 1788997714.9664984,
+    "checked_at": 1789003821.0270514,
     "notified_at": 1788516542.878059
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -48,7 +48,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1788997715.5517702,
+    "checked_at": 1789003821.5594614,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -61,7 +61,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1788997716.0634127,
+    "checked_at": 1789003825.1985044,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -74,7 +74,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788997716.559552,
+    "checked_at": 1789003825.456112,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -87,7 +87,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1788997716.839863,
+    "checked_at": 1789003825.71161,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -101,7 +101,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 5,
-    "checked_at": 1788997717.444179,
+    "checked_at": 1789003826.0887313,
     "notified_at": 1788888415.4121592
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -116,7 +116,7 @@
       "https://www.newegg.com/p/3GP-0005-00071"
     ],
     "item_count": 1,
-    "checked_at": 1788997718.2967358,
+    "checked_at": 1789003826.8856578,
     "notified_at": 0
   },
   "Macy's (Toys R Us) - new One Piece listings": {
@@ -135,11 +135,13 @@
       "https://lasportscards.com/products/crimson-haze-booster-pack",
       "https://lasportscards.com/products/cynthias-garchomp-ex-premium-collection",
       "https://lasportscards.com/products/first-partner-illustration-collection-series-2-first-partner-collection-2026",
+      "https://lasportscards.com/products/japanese-pokemon-151-booster-pack",
       "https://lasportscards.com/products/league-battle-deck-mega-lucario-ex",
       "https://lasportscards.com/products/mega-charizard-x-ex-ultra-premium-collection",
       "https://lasportscards.com/products/nihil-zero-booster-box",
       "https://lasportscards.com/products/pokemon-abyss-eye-booster-box-m5",
       "https://lasportscards.com/products/pokemon-abyss-eye-booster-pack-m5",
+      "https://lasportscards.com/products/pokemon-ascended-heroes-focused-fighters-premium-collection",
       "https://lasportscards.com/products/pokemon-ascended-heroes-mega-emboar-ex-box",
       "https://lasportscards.com/products/pokemon-ascended-heroes-mega-feraligatr-ex-box",
       "https://lasportscards.com/products/pokemon-ascended-heroes-mega-meganium-ex-box",
@@ -153,6 +155,7 @@
       "https://lasportscards.com/products/pokemon-chaos-rising-sleeved-booster-pack",
       "https://lasportscards.com/products/pokemon-charizard-ex-super-premium-collection",
       "https://lasportscards.com/products/pokemon-chinese-ninja-spinner-pack",
+      "https://lasportscards.com/products/pokemon-day-2026-collection",
       "https://lasportscards.com/products/pokemon-delta-reign-booster-box-me06",
       "https://lasportscards.com/products/pokemon-delta-reign-booster-pack-me06",
       "https://lasportscards.com/products/pokemon-ex-power-trio-tin-blastoise-ex-xy-furious-fists",
@@ -160,6 +163,8 @@
       "https://lasportscards.com/products/pokemon-hidden-fates-tin-charizard-gx-hidden-fates-hif",
       "https://lasportscards.com/products/pokemon-japanese-battle-partners-deck-build-box",
       "https://lasportscards.com/products/pokemon-japanese-future-flash-booster-box",
+      "https://lasportscards.com/products/pokemon-japanese-mega-dream-ex-booster-pack",
+      "https://lasportscards.com/products/pokemon-japanese-scarlet-ex-booster-box",
       "https://lasportscards.com/products/pokemon-league-battle-deck-reshiram-charizard-gx",
       "https://lasportscards.com/products/pokemon-lumiose-city-mini-tin",
       "https://lasportscards.com/products/pokemon-mega-greninja-ex-premium-collection-box",
@@ -182,8 +187,8 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1788997719.102028,
-    "notified_at": 0
+    "checked_at": 1789003827.778464,
+    "notified_at": 1789003827.778464
   },
   "Hot Topic - new Pokemon card listings": {
     "status": "watching",
@@ -192,7 +197,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 2,
-    "checked_at": 1788997719.518642,
+    "checked_at": 1789003829.0857494,
     "notified_at": 1788612682.0300336
   },
   "Newegg - new Pokemon TCG listings": {
@@ -206,7 +211,7 @@
       "https://www.newegg.com/p/3GP-0006-00018"
     ],
     "item_count": 6,
-    "checked_at": 1788997720.531154,
+    "checked_at": 1789003829.1992056,
     "notified_at": 0
   },
   "BoxLunch - new One Piece card listings": {
@@ -215,7 +220,7 @@
       "https://www.boxlunch.com/product/bandai-namco-one-piece-card-game-the-worlds-strongest-warrior-booster-pack/36426029.html"
     ],
     "item_count": 0,
-    "checked_at": 1788997721.730327,
+    "checked_at": 1789003830.310278,
     "notified_at": 1788827140.5576997
   },
   "BoxLunch - new Pokemon card listings": {
@@ -224,7 +229,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-mega-evolution-pitch-black-booster-pack/36953172.html"
     ],
     "item_count": 0,
-    "checked_at": 1788997722.1514614,
+    "checked_at": 1789003831.126331,
     "notified_at": 0
   }
 }
