@@ -27,7 +27,7 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1793649521.5404263,
+    "checked_at": 1793671064.6674309,
     "notified_at": 1792750936.5014334
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -55,7 +55,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1793649521.9210434,
+    "checked_at": 1793671065.6360033,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -68,7 +68,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1793649522.5086849,
+    "checked_at": 1793671066.011983,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -81,7 +81,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1793649522.8058782,
+    "checked_at": 1793671066.4818864,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -94,7 +94,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1793649523.020665,
+    "checked_at": 1793671067.0838883,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -109,7 +109,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 6,
-    "checked_at": 1793649523.4778447,
+    "checked_at": 1793671067.4833698,
     "notified_at": 1791303388.0479193
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -178,8 +178,13 @@
       "https://lasportscards.com/products/pokemon-crown-zenith-special-collection-pikachu-vmax",
       "https://lasportscards.com/products/pokemon-day-2026-collection",
       "https://lasportscards.com/products/pokemon-deck-crafters-collection-meowth-ex",
+      "https://lasportscards.com/products/pokemon-delta-reign-3-pack-blister-seel-me06",
       "https://lasportscards.com/products/pokemon-delta-reign-booster-box-me06",
+      "https://lasportscards.com/products/pokemon-delta-reign-booster-box-me06-1",
+      "https://lasportscards.com/products/pokemon-delta-reign-booster-bundle-me06",
       "https://lasportscards.com/products/pokemon-delta-reign-booster-pack-me06",
+      "https://lasportscards.com/products/pokemon-delta-reign-elite-trainer-box-me06",
+      "https://lasportscards.com/products/pokemon-delta-reign-single-pack-blister-spritzee-me06",
       "https://lasportscards.com/products/pokemon-ex-power-trio-tin-blastoise-ex-xy-furious-fists",
       "https://lasportscards.com/products/pokemon-first-partner-illustration-collection-series-1",
       "https://lasportscards.com/products/pokemon-first-partner-illustration-collection-series-3",
@@ -223,8 +228,8 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1793649524.130825,
-    "notified_at": 1793229822.504507
+    "checked_at": 1793671068.6972556,
+    "notified_at": 1793671068.6972556
   },
   "Hot Topic - new Pokemon card listings": {
     "status": "watching",
@@ -235,7 +240,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 3,
-    "checked_at": 1793649524.826023,
+    "checked_at": 1793671069.7184014,
     "notified_at": 1791303390.8415914
   },
   "Newegg - new Pokemon TCG listings": {
@@ -262,7 +267,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 0,
-    "checked_at": 1793649525.232673,
+    "checked_at": 1793671070.1750116,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -274,7 +279,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
     "item_count": 0,
-    "checked_at": 1793649526.0263722,
+    "checked_at": 1793671070.9810212,
     "notified_at": 1792159207.8658814
   }
 }
