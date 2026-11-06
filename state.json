@@ -10,11 +10,14 @@
       "https://en.onepiece-cardgame.com/products/collection-flame.html",
       "https://en.onepiece-cardgame.com/products/dp13.html",
       "https://en.onepiece-cardgame.com/products/eb05.html",
+      "https://en.onepiece-cardgame.com/products/eb06.html",
       "https://en.onepiece-cardgame.com/products/gift-collection.html",
       "https://en.onepiece-cardgame.com/products/heroines-special.html",
       "https://en.onepiece-cardgame.com/products/ib09.html",
       "https://en.onepiece-cardgame.com/products/ib10.html",
       "https://en.onepiece-cardgame.com/products/op18.html",
+      "https://en.onepiece-cardgame.com/products/op19.html",
+      "https://en.onepiece-cardgame.com/products/per01.html",
       "https://en.onepiece-cardgame.com/products/playmat_flame-flame-fruit.html",
       "https://en.onepiece-cardgame.com/products/playmat_liffy-bonney.html",
       "https://en.onepiece-cardgame.com/products/sd01.html",
@@ -29,8 +32,8 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1793958374.4810283,
-    "notified_at": 1793958374.4810283
+    "checked_at": 1793984190.818179,
+    "notified_at": 1793984190.818179
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
     "status": "watching",
@@ -57,7 +60,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1793958375.0794604,
+    "checked_at": 1793984191.3821375,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -70,7 +73,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1793958375.3194108,
+    "checked_at": 1793984191.6889126,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -83,7 +86,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1793958375.826823,
+    "checked_at": 1793984191.9664874,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -96,7 +99,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1793958376.0529234,
+    "checked_at": 1793984192.25267,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -111,7 +114,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 5,
-    "checked_at": 1793958376.553901,
+    "checked_at": 1793984192.6684246,
     "notified_at": 1791303388.0479193
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -242,7 +245,7 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1793958377.1879265,
+    "checked_at": 1793984193.466636,
     "notified_at": 1793932299.6594512
   },
   "Hot Topic - new Pokemon card listings": {
@@ -254,7 +257,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 3,
-    "checked_at": 1793958377.9676688,
+    "checked_at": 1793984194.192573,
     "notified_at": 1791303390.8415914
   },
   "Newegg - new Pokemon TCG listings": {
@@ -281,7 +284,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 1,
-    "checked_at": 1793958378.4681652,
+    "checked_at": 1793984194.719236,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -293,7 +296,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
     "item_count": 0,
-    "checked_at": 1793958379.4269843,
+    "checked_at": 1793984195.577589,
     "notified_at": 1792159207.8658814
   }
 }
