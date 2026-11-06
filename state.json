@@ -27,7 +27,7 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1793917128.632895,
+    "checked_at": 1793932294.3582897,
     "notified_at": 1792750936.5014334
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -55,7 +55,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1793917129.4056356,
+    "checked_at": 1793932294.9953778,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -68,7 +68,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1793917129.750895,
+    "checked_at": 1793932295.3992171,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -81,7 +81,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1793917130.3942559,
+    "checked_at": 1793932295.763271,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -94,7 +94,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1793917131.014515,
+    "checked_at": 1793932296.0679572,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -109,7 +109,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 5,
-    "checked_at": 1793917131.3952165,
+    "checked_at": 1793932298.741877,
     "notified_at": 1791303388.0479193
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -176,6 +176,7 @@
       "https://lasportscards.com/products/pokemon-chaos-rising-build-battle-box",
       "https://lasportscards.com/products/pokemon-chaos-rising-elite-trainer-box-me04",
       "https://lasportscards.com/products/pokemon-chaos-rising-sleeved-booster-pack",
+      "https://lasportscards.com/products/pokemon-charizard-ex-special-collection",
       "https://lasportscards.com/products/pokemon-charizard-ex-super-premium-collection",
       "https://lasportscards.com/products/pokemon-chinese-ninja-spinner-pack",
       "https://lasportscards.com/products/pokemon-copperajah-v-box",
@@ -224,8 +225,10 @@
       "https://lasportscards.com/products/pokemon-pitch-black-build-battle-box-me05",
       "https://lasportscards.com/products/pokemon-pitch-black-elite-trainer-box-me05",
       "https://lasportscards.com/products/pokemon-pitch-black-sleeved-booster-pack-me05",
+      "https://lasportscards.com/products/pokemon-prismatic-evolutions-accessory-pouch-special-collection-sv08-5",
       "https://lasportscards.com/products/pokemon-prismatic-evolutions-binder-collection-sv08-5",
       "https://lasportscards.com/products/pokemon-prismatic-evolutions-mini-tin-8-pack-costco-exclusive-sv08-5",
+      "https://lasportscards.com/products/pokemon-shining-fates-collection-swsh04-5",
       "https://lasportscards.com/products/pokemon-shining-fates-premium-collection-shiny-crobat",
       "https://lasportscards.com/products/pokemon-simplified-chinese-30th-celebration-booster-box-me05-5",
       "https://lasportscards.com/products/pokemon-simplified-chinese-pikachu-v-union-gift-box",
@@ -237,8 +240,8 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1793917132.2435355,
-    "notified_at": 1793917132.2435355
+    "checked_at": 1793932299.6594512,
+    "notified_at": 1793932299.6594512
   },
   "Hot Topic - new Pokemon card listings": {
     "status": "watching",
@@ -249,7 +252,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 3,
-    "checked_at": 1793917133.1056414,
+    "checked_at": 1793932300.7023895,
     "notified_at": 1791303390.8415914
   },
   "Newegg - new Pokemon TCG listings": {
@@ -276,7 +279,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 1,
-    "checked_at": 1793917133.4940002,
+    "checked_at": 1793932301.2822297,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -288,7 +291,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
     "item_count": 0,
-    "checked_at": 1793917134.31177,
+    "checked_at": 1793932301.5725064,
     "notified_at": 1792159207.8658814
   }
 }
