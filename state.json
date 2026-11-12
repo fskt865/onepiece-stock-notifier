@@ -32,7 +32,7 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1794484343.5836358,
+    "checked_at": 1794510807.7881265,
     "notified_at": 1793984190.818179
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -60,7 +60,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1794484343.9673362,
+    "checked_at": 1794510808.3454025,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -73,7 +73,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1794484344.2928069,
+    "checked_at": 1794510808.7693079,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -86,7 +86,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1794484344.6270423,
+    "checked_at": 1794510809.300776,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -99,7 +99,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1794484344.9578884,
+    "checked_at": 1794510809.8303065,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -114,7 +114,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 4,
-    "checked_at": 1794484345.3527365,
+    "checked_at": 1794510810.2610288,
     "notified_at": 1791303388.0479193
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -256,7 +256,7 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1794484345.868607,
+    "checked_at": 1794510811.3303802,
     "notified_at": 1794362400.9813776
   },
   "Hot Topic - new Pokemon card listings": {
@@ -268,7 +268,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 3,
-    "checked_at": 1794484346.5053265,
+    "checked_at": 1794510812.0160997,
     "notified_at": 1791303390.8415914
   },
   "Newegg - new Pokemon TCG listings": {
@@ -295,7 +295,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 1,
-    "checked_at": 1794484346.9475808,
+    "checked_at": 1794510812.97362,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -305,12 +305,21 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-30th-celebration-mini-tins/37090060.html",
       "https://www.boxlunch.com/product/pokemon-trading-card-game-booster-pack/37041416.html",
       "https://www.boxlunch.com/product/pokemon-trading-card-game-japanese-mega-brave-booster-pack/37232519.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-black-bolt-booster-pack/37232516.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-cyber-judge-booster-pack/37232520.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-mega-abyss-booster-pack/37230251.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-mega-inferno-x-booster-pack/37232518.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-mega-ninja-spinner-booster-pack/37230254.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-mega-symphonia-booster-pack/37232503.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-supercharged-breaker-booster-pack/37232517.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-the-glory-of-team-rocket-booster-pack/37232515.html",
       "https://www.boxlunch.com/product/pokemon-trading-card-game-korean-white-flare-booster-pack/37232521.html",
       "https://www.boxlunch.com/product/pokemon-trading-card-game-mega-evolution-pitch-black-booster-pack/36953172.html",
+      "https://www.boxlunch.com/product/pokemon-trading-card-game-mega-nihil-zero-booster-pack/37232513.html",
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
-    "item_count": 2,
-    "checked_at": 1794484347.2410913,
-    "notified_at": 1794415262.7626407
+    "item_count": 9,
+    "checked_at": 1794510813.6759114,
+    "notified_at": 1794510813.6759114
   }
 }
