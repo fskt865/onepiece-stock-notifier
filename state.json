@@ -32,7 +32,7 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1794553099.7732313,
+    "checked_at": 1794582203.5398774,
     "notified_at": 1793984190.818179
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -60,7 +60,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1794553100.0764883,
+    "checked_at": 1794582203.807042,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -73,7 +73,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1794553100.369457,
+    "checked_at": 1794582204.1762874,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -86,7 +86,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1794553100.6516535,
+    "checked_at": 1794582204.4291317,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -99,7 +99,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1794553101.0704236,
+    "checked_at": 1794582204.625539,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -114,7 +114,7 @@
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
     "item_count": 4,
-    "checked_at": 1794553101.4808042,
+    "checked_at": 1794582204.918546,
     "notified_at": 1791303388.0479193
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
@@ -256,7 +256,7 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1794553102.3713925,
+    "checked_at": 1794582205.6204615,
     "notified_at": 1794362400.9813776
   },
   "Hot Topic - new Pokemon card listings": {
@@ -268,7 +268,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 3,
-    "checked_at": 1794553102.995026,
+    "checked_at": 1794582206.170463,
     "notified_at": 1791303390.8415914
   },
   "Newegg - new Pokemon TCG listings": {
@@ -295,7 +295,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 1,
-    "checked_at": 1794553103.4754996,
+    "checked_at": 1794582206.5767546,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -318,8 +318,8 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-mega-nihil-zero-booster-pack/37232513.html",
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
-    "item_count": 9,
-    "checked_at": 1794553103.7617645,
+    "item_count": 11,
+    "checked_at": 1794582207.1991131,
     "notified_at": 1794510813.6759114
   }
 }
