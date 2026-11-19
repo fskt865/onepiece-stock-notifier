@@ -32,7 +32,7 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1795044387.837798,
+    "checked_at": 1795061891.4574523,
     "notified_at": 1793984190.818179
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -60,7 +60,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1795044388.1640415,
+    "checked_at": 1795061891.689897,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -73,7 +73,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1795044388.6399639,
+    "checked_at": 1795061892.038584,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -86,7 +86,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1795044389.001804,
+    "checked_at": 1795061892.2788157,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -99,7 +99,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1795044389.736053,
+    "checked_at": 1795061892.6917648,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -111,15 +111,17 @@
       "https://www.hottopic.com/product/one-piece-card-game-the-best-vol.-2-japanese-booster-pack/37294860.html",
       "https://www.hottopic.com/product/one-piece-card-game-the-new-emperor-japanese-booster-pack/37294854.html",
       "https://www.hottopic.com/product/one-piece-card-game-the-time-of-battle-japanese-booster-pack/37290214.html",
+      "https://www.hottopic.com/product/one-piece-card-game-the-worlds-strongest-japanese-booster-pack/37284689.html",
       "https://www.hottopic.com/product/one-piece-card-game-the-worlds-strongest-warriors-booster-pack/36390879.html",
+      "https://www.hottopic.com/product/one-piece-card-game-two-legends-japanese-booster-pack/37294856.html",
       "https://www.hottopic.com/product/one-piece-cardquest-bonus-quest-mystery-booster-pack/36904397.html",
       "https://www.hottopic.com/product/one-piece-cardquest-gem-quest-mystery-pack/36903258.html",
       "https://www.hottopic.com/product/one-piece-top-trumps-quiz-card-game/36447339.html",
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
-    "item_count": 8,
-    "checked_at": 1795044390.10737,
-    "notified_at": 1795022650.1917775
+    "item_count": 10,
+    "checked_at": 1795061892.9872856,
+    "notified_at": 1795061892.9872856
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
     "status": "missing_secret",
@@ -262,7 +264,7 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1795044390.923638,
+    "checked_at": 1795061894.0104249,
     "notified_at": 1794698043.503687
   },
   "Hot Topic - new Pokemon card listings": {
@@ -274,7 +276,7 @@
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html"
     ],
     "item_count": 3,
-    "checked_at": 1795044391.5272632,
+    "checked_at": 1795061894.5630238,
     "notified_at": 1791303390.8415914
   },
   "Newegg - new Pokemon TCG listings": {
@@ -301,7 +303,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 1,
-    "checked_at": 1795044391.9607465,
+    "checked_at": 1795061895.2955055,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -328,7 +330,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
     "item_count": 4,
-    "checked_at": 1795044392.2069566,
+    "checked_at": 1795061896.0146163,
     "notified_at": 1795044392.2069566
   }
 }
