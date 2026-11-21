@@ -33,7 +33,7 @@
       "https://en.onepiece-cardgame.com/products/ts03.html"
     ],
     "item_count": 12,
-    "checked_at": 1795244851.2367344,
+    "checked_at": 1795274176.7946517,
     "notified_at": 1795094367.2371
   },
   "LA Sports Cards (Burbank/Glendale) - new One Piece listings": {
@@ -61,7 +61,7 @@
       "https://lasportscards.com/products/12099"
     ],
     "item_count": 20,
-    "checked_at": 1795244851.5493698,
+    "checked_at": 1795274177.1216745,
     "notified_at": 0
   },
   "LA Sports Cards (Burbank/Glendale) - new Japanese One Piece listings": {
@@ -74,7 +74,7 @@
       "https://lasportscards.com/products/one-piece-the-new-emperor-japanese-booster-pack-op-09"
     ],
     "item_count": 5,
-    "checked_at": 1795244852.0768025,
+    "checked_at": 1795274177.4042716,
     "notified_at": 0
   },
   "Premium Bandai US - featured One Piece items": {
@@ -87,7 +87,7 @@
       "https://p-bandai.com/us/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1795244852.451334,
+    "checked_at": 1795274178.212119,
     "notified_at": 0
   },
   "Premium Bandai Singapore - featured One Piece items": {
@@ -100,7 +100,7 @@
       "https://p-bandai.com/sg/item/N2747766001001"
     ],
     "item_count": 5,
-    "checked_at": 1795244852.8119006,
+    "checked_at": 1795274178.7953753,
     "notified_at": 0
   },
   "Hot Topic - new One Piece card listings": {
@@ -119,11 +119,12 @@
       "https://www.hottopic.com/product/one-piece-cardquest-bonus-quest-mystery-booster-pack/36904397.html",
       "https://www.hottopic.com/product/one-piece-cardquest-gem-quest-mystery-pack/36903258.html",
       "https://www.hottopic.com/product/one-piece-top-trumps-quiz-card-game/36447339.html",
+      "https://www.hottopic.com/product/presstine-one-piece-card-game-presti-pack/37141857.html",
       "https://www.hottopic.com/product/top-trumps-specials-one-piece-card-game/36454921.html"
     ],
-    "item_count": 12,
-    "checked_at": 1795244853.1476572,
-    "notified_at": 1795094368.7775953
+    "item_count": 13,
+    "checked_at": 1795274179.0821724,
+    "notified_at": 1795274179.0821724
   },
   "Best Buy - new One Piece TCG products (official API, needs BESTBUY_API_KEY secret)": {
     "status": "missing_secret",
@@ -267,21 +268,23 @@
       "https://lasportscards.com/products/trick-or-trade-booster-bundle-2024-mini-booster-pack-trick-or-trade-booster-bundle-2024-ttbb24"
     ],
     "item_count": 50,
-    "checked_at": 1795244853.9413056,
+    "checked_at": 1795274180.0260005,
     "notified_at": 1795244853.9413056
   },
   "Hot Topic - new Pokemon card listings": {
     "status": "watching",
     "seen": [
+      "https://www.hottopic.com/product/cardstar-pokemon-tcg-hit-pack/37332526.html",
+      "https://www.hottopic.com/product/cardstar-pokemon-tcg-holo-rare-pack/37332528.html",
       "https://www.hottopic.com/product/krc-pokemon-ultra-rare-card-pack/36453404.html",
       "https://www.hottopic.com/product/pokemon-cardquest-bonus-quest-mystery-booster-pack/36903256.html",
       "https://www.hottopic.com/product/pokemon-cardquest-gem-quest-mystery-pack/36904401.html",
       "https://www.hottopic.com/product/pokemon-cardquest-mystery-booster-pack-toploader-set-hot-topic-exclusive/34919296.html",
       "https://www.hottopic.com/product/presstine-pokemon-pressti-trading-card-pack/37141861.html"
     ],
-    "item_count": 2,
-    "checked_at": 1795244854.7057052,
-    "notified_at": 1795219854.584131
+    "item_count": 3,
+    "checked_at": 1795274180.5403988,
+    "notified_at": 1795274180.5403988
   },
   "Newegg - new Pokemon TCG listings": {
     "status": "watching",
@@ -307,7 +310,7 @@
       "https://www.boxlunch.com/product/one-piece-paramount-war-card-game-booster-pack/20474385.html"
     ],
     "item_count": 1,
-    "checked_at": 1795244855.0777063,
+    "checked_at": 1795274180.9321234,
     "notified_at": 1793428146.2860615
   },
   "BoxLunch - new Pokemon card listings": {
@@ -334,7 +337,7 @@
       "https://www.boxlunch.com/product/pokemon-trading-card-game-scarlet-violet-destined-rivals-booster-pack/37041416.html"
     ],
     "item_count": 3,
-    "checked_at": 1795244855.7836633,
+    "checked_at": 1795274181.1358745,
     "notified_at": 1795044392.2069566
   }
 }
